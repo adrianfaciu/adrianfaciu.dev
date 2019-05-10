@@ -7,7 +7,7 @@ module.exports = {
   copyright: "© All rights reserved.",
   disqusShortname: "",
   postsPerPage: 4,
-  googleAnalyticsId: "",
+  googleAnalyticsId: "UA-139953028-1",
   menu: [
     {
       label: "Articles",
