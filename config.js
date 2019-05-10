@@ -2,7 +2,7 @@
 
 module.exports = {
   url: "https://adrianfaciu.dev",
-  title: "adrianfaciu.dev",
+  title: "Blog by Adrian Fâciu",
   subtitle: "My personal blog",
   copyright: "© All rights reserved.",
   disqusShortname: "",
