@@ -18,13 +18,17 @@ module.exports = {
       path: "/pages/about"
     },
     {
+      label: "Photos",
+      path: "/pages/photos"
+    },
+    {
       label: "Contact me",
       path: "/pages/contacts"
     }
   ],
   author: {
     name: "Adrian Fâciu",
-    photo: "/photo.jpg",
+    photo: "/myself.jpg",
     bio:
       "Passionate software developer. Learning something new each day. Writing code at Visma. Writer for Angular in Depth.",
     contacts: {
