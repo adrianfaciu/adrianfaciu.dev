@@ -29,11 +29,12 @@ module.exports = {
       "Passionate software developer. Learning something new each day. Writing code @visma. Writer for @AngularInDepth.",
     contacts: {
       email: "adrian.faciu@gmail.com",
-      telegram: "#",
       twitter: "adrianfaciu",
       github: "adrianfaciu",
       rss: "#",
-      vkontakte: "#"
+      stackoverflow: "adrian-f%c3%a2ciu",
+      medium: "adrianfaciu",
+      linkedin: "adrianfaciu"
     }
   }
 };
