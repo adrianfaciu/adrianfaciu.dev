@@ -26,7 +26,7 @@ module.exports = {
     name: "Adrian Fâciu",
     photo: "/photo.jpg",
     bio:
-      "Passionate software developer. Learning something new each day. Writing code @visma. Writer for @AngularInDepth.",
+      "Passionate software developer. Learning something new each day. Writing code at Visma. Writer for Angular in Depth.",
     contacts: {
       email: "adrian.faciu@gmail.com",
       twitter: "adrianfaciu",
