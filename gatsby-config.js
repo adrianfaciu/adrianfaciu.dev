@@ -190,6 +190,20 @@ module.exports = {
         }
       }
     },
-    "gatsby-plugin-flow"
+    "gatsby-plugin-flow",
+    {
+      resolve: "gatsby-transformer-remark",
+      options: {
+        plugins: [
+          {
+            resolve: "gatsby-remark-embed-gist",
+            options: {
+              username: "adrianfaciu",
+              includeDefaultCss: true
+            }
+          }
+        ]
+      }
+    }
   ]
 };

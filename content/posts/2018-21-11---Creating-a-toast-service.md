@@ -7,9 +7,13 @@ slug: "/posts/angular-toast-service/"
 category: "Angular"
 tags:
   - "Angular"
-  - "Directives"
-description: "OK, not that kind of toast message, but something close 😃. Prepare yourself, this will be a long read, starting from scratch up to a full-blown, almost, production-ready toast service."
+  - "Toast"
+  - "CDK"
+  - "Service"
+description: "Angular Material is a great material UI design components library for your Angular applications. All the common parts needed to create components, things like layout, accessibility, common components like grid or tree have been isolated inside the CDK."
 ---
+
+![person holding phone](https://images.unsplash.com/photo-1514464750060-00e6e34c8b8c?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1267&q=80)
 
 OK, not that kind of toast message, but something close 😃. Prepare yourself, this will be a long read, starting from scratch up to a full-blown, _almost,_ **production-ready** toast service.
 
@@ -33,15 +37,15 @@ Now we can use what we need from the CDK. We’ll mainly use the [Overlay packag
 
 We can start with the basic thing that we need, meaning a toast component:
 
-<iframe src="https://medium.com/media/2f3d57c996977c5b658b8049290f528b" frameborder=0></iframe>
+`gist:583a50845a7b8889b217c4428e7daa19`
 
-This is the simplest component possible, a selector and a <div> with some text. Further down, we’ll extend it to suit our needs. But for now we’ll focus on displaying it on the screen.
+This is the simplest component possible, a selector and a `<div>` with some text. Further down, we’ll extend it to suit our needs. But for now we’ll focus on displaying it on the screen.
 
 First thing after we have a component is to add it to an NgModule. In this case since we’ll not use the component directly in a template we’ll have to also add it to the entryComponents list, otherwise, the compiler will notice it’s not used and will remove it from the final bundle.
 
 Since we’re good citizens and we can think like we’re creating a library we can create a module file just for this toast component:
 
-<iframe src="https://medium.com/media/b3a83912874d87ccca29a789a1c9ad35" frameborder=0></iframe>
+`gist:665a6ed4e111f5ef8669140aad4b242f`
 
 The only thing left to do with this module is add it in the imports array of our main application module.
 
@@ -49,7 +53,7 @@ The only thing left to do with this module is add it in the imports array of our
 
 Now that we have a component and a module for our toast, we can start thinking about what we need next. From our application, we want to programmatically show toast messages whenever it’s needed. So the best option for this would be a toast service:
 
-<iframe src="https://medium.com/media/d6b13508a7b469b3e7eb759ff8319aab" frameborder=0></iframe>
+`gist:6105f06ac20ce6757c7d1c10506037ff`
 
 We have a simple service with an empty (for now) method _show_. The only notable thing is that we use the new _providedIn_ attribute of the Injectable decorator that’s available since Angular 6, specifying ‘root’ as a value. This means that this service will be registered as a singleton in our application, and that we don’t need to add it to the providers array anymore.
 
@@ -89,11 +93,11 @@ In order to make it look more like a toast, we’ll add some basic styling (simi
 
 Our toast component will look a bit more complex now:
 
-<iframe src="https://medium.com/media/0ee790cf218400b9ba91263efc0d6a92" frameborder=0></iframe>
+`gist:45abbc822b333e8b226f31221c615a36`
 
 Now we have defined the toast CSS class to make it look a bit more like a toast message:
 
-<iframe src="https://medium.com/media/db3af8c80dab6777848d554b4c721f0d" frameborder=0></iframe>
+`gist:2c9be4327ca9200d981c9c99c3f1516b`
 
 I assume we don’t always want to show the text “This is a toast” when displaying the message. We’ll make this configurable so that each time we call the show method we can pass in what text we want to show.
 
@@ -179,7 +183,7 @@ Then we have to add the icon font to our HTML file by including this line:
 
 Add the Material icon module to our imports:
 
-<iframe src="https://medium.com/media/b7f1e14f9d1ebaeeb5ebdbea47ffe825" frameborder=0></iframe>
+`gist:a91c9a700afd697b5b5f067bf0898609`
 
 And finally, we’re able to display an icon:
 
@@ -205,17 +209,17 @@ Now really, how do we close the toast? It looks like it’s not that complicated
 
 Similar to how we got an overlay reference instance when creating one, we also want to create a toast reference that we can use and return using our service. The only thing we need in it now is the close method:
 
-<iframe src="https://medium.com/media/519010ea0bf61dbe92a7b0cf05142b1b" frameborder=0></iframe>
+`gist:e576832c66f8296ea2d4780015d50e28`
 
 We pass in the overlay reference and only expose the close method that will call dispose. We’ll use it in two places from the start. We’ll return it to the user from the show method of the toast service. And, we’ll pass it to the toast component so it can close itself:
 
-<iframe src="https://medium.com/media/53af85024074ca8390610843a914880c" frameborder=0></iframe>
+`gist:1d236460c858362d889b4fd5a3110d81`
 
 Instantiate it by passing the overlay reference, return it from the method and add it to the tokens when we create the injector.
 
 In the toast component, we implement the close method. When the user clicks the close icon we actually do something and use a setTimeout to automatically hide the toast after an interval:
 
-<iframe src="https://medium.com/media/b72051c989d475965b8e3aa279d5f03f" frameborder=0></iframe>
+`gist:c08dfb6daa20092b4f527cbcb3180b1e`
 
 Awesome! Let’s make some changes to correctly show toasts one beneath the other.
 
@@ -269,13 +273,13 @@ For sure there will be some cases where a simple text message is not enough. May
 
 First, we extend the ToastData object that we passed into our show method inside the toast service so that we can either pass in a text that we want to show or a template reference, optionally with a context object:
 
-<iframe src="https://medium.com/media/60c3db4df963cf4ff4d8c4f76a1504e6" frameborder=0></iframe>
+`gist:6e1857694d0128f1881139338b9b5b0c`
 
 We marked all three of text, template, and templateContext as options so we can pass in either of them. One might want to treat the case when nothing is passed in though. 😄
 
 With this in place, we have to update the template of our toast message to account for this new template reference that might be used. In order to obtain this, we’ll use the [ng-template component](https://blog.angularindepth.com/use-ng-template-c72852c37fba) provided by Angular:
 
-<iframe src="https://medium.com/media/6e83b8c725c1b33441c9b232bc3e5b96" frameborder=0></iframe>
+`gist:f25d269e2e3875204d6e1fb11fbe6852`
 
 We have a container that we show only if we have a text property. If not, we just show the template also providing the context.
 
@@ -300,7 +304,7 @@ In order for this to work you need to import the [BrowserAnimationsModule](https
 
 Then, we can go on and create some animations. I find it best to isolate different things in different files so we can create a file where we specify our animations:
 
-<iframe src="https://medium.com/media/805354d0b28b74affa6026978f858ec8" frameborder=0></iframe>
+`gist:0a39c14da637d6e5dd5c225f7ddee4c5`
 
 If we ignore the imports, which are almost half of the code, the rest is not that complicated.
 
@@ -328,7 +332,7 @@ Inside our toast component we have to add the animation to the animations array 
 
 With this in place, we can update the template with the animation:
 
-<iframe src="https://medium.com/media/8996b8250237cc7f2d24952257de7f1f" frameborder=0></iframe>
+`gist:94944322a83427de4af69dd6882d1de7`
 
 We have to use the trigger name that we defined for our animation, in our case *fadeAnimation *and bind an object to it, similar to property binding. Inside the object we specify two properties: the value that is bound to our component property that holds the animations state, and a params property where we specify configurable values that we use inside the animation.
 
@@ -347,7 +351,7 @@ And now we handle the animation done event to actually close the toast. Add the 
 
 Create the function that will take care of this:
 
-<iframe src="https://medium.com/media/794adbe6c32bd1f98bba1bb91629096f" frameborder=0></iframe>
+`gist:c0bbe0ae1c1d68cb88eee3f52122bb41`
 
 As a bonus, you could reset the time whenever the user moves the mouse on a toast message. 😉
 
@@ -359,15 +363,15 @@ A perfect place to set a global config would be the NgModule we created for our 
 
 Firstly we should define an interface for this toast config object, something like:
 
-<iframe src="https://medium.com/media/92d5bad8ef16826a5fbd4c89ee1dde0d" frameborder=0></iframe>
+`gist:cb3d3f9a59c45b06d662234edaf2bfc7`
 
 Also we should provide some default values that we can use when setting things up in case nothing is specified:
 
-<iframe src="https://medium.com/media/d96104fc1643a75850fe3351197e1920" frameborder=0></iframe>
+`gist:a68033c9107d6ef57c3bff853bb69c45`
 
 Now back to our module file, we can implement the forRoot method that will accept an argument of type ToastConfig and add it to the providers array so we can use it in our service:
 
-<iframe src="https://medium.com/media/dae5317ee48140ff131c0b837c41463e" frameborder=0></iframe>
+`gist:0311ab00e836066d6a02690873f43db0`
 
 If we don’t pass anything, we have the default value for the config. If we pass something, it might be just a part of the config that we want to overwrite, for example the positioning. So when we provide the value we destructure the default config and then overwrite any properties that were specified by the user.
 
@@ -386,14 +390,12 @@ Then we can update the position methods to use the top and right properties from
 
 This way we have a nicely setup global configuration for our toast service. This can easily be extended to add any other properties we want and will allow this service to be used inside different projects that might have slightly different needs.
 
-As a different and probably cleaner alternative, one can created **a single overlay** and a **container component** that will be displayed in the overlay. All the toast messages can be added inside this container component and the template will be an **ngIf** directive going over them. This can make working with positioning and animations easier. Thanks to [Alex Okrushko](undefined) for the feedback and suggestion.
+As a different and probably cleaner alternative, one can created **a single overlay** and a **container component** that will be displayed in the overlay. All the toast messages can be added inside this container component and the template will be an **ngIf** directive going over them. This can make working with positioning and animations easier. Thanks to [Alex Okrushko](https://twitter.com/AlexOkrushko) for the feedback and suggestion.
 
 Hope this helped and that you managed to read all the way to here 😉
 
 This is how our simple toast messages look and behave:
 
-![](https://cdn-images-1.medium.com/max/2000/1*A2HWtuX5NKH8d5BOvKZN3A.gif)
+![](/posts/toast-demo.gif)
 
 You can see the **code** [on StackBlitz](https://stackblitz.com/edit/angular-toast-service).
-
-![](https://cdn-images-1.medium.com/max/2000/1*H2e3pqOs3MxFuRyZrsrtTA.jpeg)
