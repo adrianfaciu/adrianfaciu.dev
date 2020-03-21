@@ -8,8 +8,12 @@ category: "Angular"
 tags:
   - "Angular"
   - "Directives"
-description: "In this post, we’re gonna talk about one of the most important building blocks of an Angular application. As we know, an application is like a tree of components. And these components are actually directives with a template."
+  - "AgGrid"
+description: "In this post, we’re gonna talk about one of the most important building blocks of an Angular application. As we know, an application is like a tree of components. And these components are actually directives with a template. We’ll focus on Angular directives, both attribute and structural. And we’ll talk a bit about components..."
+canonical: "https://blog.ag-grid.com/custom-angular-directives/"
 ---
+
+This is a post written for [AgGrid](https://www.ag-grid.com/), you can see the [original here.](https://blog.ag-grid.com/custom-angular-directives/)
 
 # Intro
 

@@ -1,11 +1,11 @@
 // @flow
-import type { Node as ReactNode } from 'react';
+import type { Node as ReactNode } from "react";
 
 export type RenderCallback = (data: any) => ReactNode;
 
 export type Entry = (string[]) => string;
 
-export type WidgetFor = (string) => string;
+export type WidgetFor = string => string;
 
 export type PageContext = {
   tag: string,
@@ -29,6 +29,7 @@ export type Node = {
     category?: string,
     tags?: string[],
     title: string,
+    canonical?: string
   },
   html: string,
   id: string
@@ -42,7 +43,7 @@ export type Edges = Array<Edge>;
 
 export type AllMarkdownRemark = {
   allMarkdownRemark: {
-    edges: Edges,
+    edges: Edges
   },
   group: {
     fieldValue: string,
