@@ -21,15 +21,15 @@ When importing modules they are usually separated in two:
 
 When doing the second the web is, unfortunately, full of examples that use relative paths to get the needed file:
 
-import { foo } from ‘../bar’;
+    import { foo } from ‘../bar’;
 
 Which is quite ok, but it goes quickly wrong when the file we need is several levels up or down. Then we get something like:
 
-import { foo } from ‘../../../../bar’;
+    import { foo } from ‘../../../../bar’;
 
 Which is hard to write/read and will break as soon as we move the file somewere else.
 
-Since **TypeScript 2.0**, we have an awesome compiler setting called [\*\*baseUrl](https://github.com/Microsoft/TypeScript/wiki/What's-new-in-TypeScript#base-url)\*\*, and we can configure it in the tsconfig.json file like:
+Since **TypeScript 2.0**, we have an awesome compiler setting called [**baseUrl**](https://github.com/Microsoft/TypeScript/wiki/What's-new-in-TypeScript#base-url), and we can configure it in the tsconfig.json file like:
 
     {
       "compilerOptions": {
@@ -37,11 +37,11 @@ Since **TypeScript 2.0**, we have an awesome compiler setting called [\*\*baseUr
       }
     }
 
-If you are using [\*Angular CLI](https://cli.angular.io)\* this will be already setup for you. In the tsconfig file for the app it’s set as above.
+If you are using [_Angular CLI_](https://cli.angular.io) this will be already setup for you. In the tsconfig file for the app it’s set as above.
 
 Once this is done we can use a path starting from that base url, so most of our imports will be transformed to something like:
 
-import { foo } from ‘app/bar’
+    import { foo } from ‘app/bar’
 
 I would use this for almost all of the imports throughout an application. Those that import from the same folder might be left as they are though.
 

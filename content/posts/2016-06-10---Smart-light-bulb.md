@@ -16,7 +16,7 @@ Since one of the awesome things I got from AngularConnect was a Magic Blue smart
 
 [NativeScript ](http://www.nativescript.org)is an open source framework for building native mobile applications, using web technologies, and it works with the latest version of [Angular](https://angular.io/).
 
-![](https://cdn-images-1.medium.com/max/2000/1*K0hYDiKQC3A-MxjL_LfhuA.jpeg)
+![smart light bulb](/posts/nativescript-1.jpeg)
 
 I’ll go through setting up the environment, creating a new template application, a basic component and interacting with the light bulb.
 
@@ -66,11 +66,11 @@ You can start by creating a simple Angular component, with the accompanying temp
 
 The project structure should look similar to this:
 
-![](https://cdn-images-1.medium.com/max/2000/1*z-PEkmQugtidJhgm2Qqs_w.png)
+![sample project structure](/posts/nativescript-2.png)
 
 Then create a class and add the component decorator:
 
-<iframe src="https://medium.com/media/001c60b5ccbb820d04cc541c7fc1f5df" frameborder=0></iframe>
+`gist:8fa74249a8e2f9c2b288a9272c4b8223`
 
 Beside the boilerplate code, there is one method that will eventually update the light bulb color, a method to connect to the light bulb, a set of properties that will be used to bind the color model (red, green, blue, warm white) and some minimum and maximum values for a color. I’ll create the template for this model shortly.
 
@@ -78,15 +78,15 @@ NativeScript uses Angular, but it doesn’t work with a browser, so you won’t 
 
 Adding some basic controls for a simple UI, that can be used to control the color of the light bulb, is all that’s needed.
 
-<iframe src="https://medium.com/media/514f5b82064cd587a097dc8445bb3ab8" frameborder=0></iframe>
+`gist:94c5311a817d1315de5530a54628e872`
 
 First you specify the stack layout, and then added two buttons, one for each of our actions, four sliders for the color model and a title so you know what the application does :)
 
-The Angular binding syntax work here also, so you can add event handlers with *(tap)=”updateLightBulb()”, *bind to element properties with *[minValue]=”minValue” *and use two way binding with *[(ngModel)]=”blueValue”. [*Angular documentation](https://angular.io/docs/ts/latest/guide/template-syntax.html) offers more insights about this if needed.
+The Angular binding syntax work here also, so you can add event handlers with *(tap)=”updateLightBulb()”, *bind to element properties with *[minValue]=”minValue” *and use two way binding with [(ngModel)]=”blueValue”. [Angular documentation](https://angular.io/docs/ts/latest/guide/template-syntax.html) offers more insights about this if needed.
 
 With some basic styling (can be grabbed [from GitHub](https://github.com/adrianfaciu/NativeScriptLightBulb/tree/master/app/components/bulb-control)) the application should look like this:
 
-![screenshot from a real device](https://cdn-images-1.medium.com/max/2000/1*kxBAdc3dxPbcU61qJPGbsg.png)_screenshot from a real device_
+![screenshot from a real device](/posts/nativescript-3.png)
 
 ### Interacting with the light bulb
 
@@ -98,11 +98,11 @@ NativeScript-Bluetooth can be found on [GitHub](https://github.com/EddyVerbrugge
 
 Next, you can move on, to create some services to help interact with the bluetooth plugin. You can create one as a wrapper for the bluetooth plugin and one to hold the logic related to the light bulb.
 
-![](https://cdn-images-1.medium.com/max/2000/1*h7ihRHgBMsU9OazM2powPw.png)
+![solution opened in visual studio code](posts/nativescript-4.png)
 
 A class to hold a bluetooth device properties might come in handy also.
 
-<iframe src="https://medium.com/media/3d5b57496a96361de7fa8b712d39645a" frameborder=0></iframe>
+`gist:f6f349697ea833b7f9ad001ec002025c`
 
 First thing that you need to do is handle the application permissions. For Android this means that inside the AndroidManifest.xml file you’ll add these extra three permissions:
 
@@ -113,7 +113,7 @@ The first two will allow to discover and connect to bluetooth devices, and the l
 
 Moreover, even if they are added, you need an extra step to request for permission at run time in order to be able to scan for devices. You can do this with *requestCoarseLocationPermission *method from the bluetooth plugin:
 
-<iframe src="https://medium.com/media/d55a71f9e893ee9396b693666c9b583c" frameborder=0></iframe>
+`gist:5352ddb279295bd2d7b627bc2053acb6`
 
 You can call this method when the application initialises, to be sure we have the permission from that point on. For example in the OnInit hook of our light bulb component.
 
@@ -121,7 +121,7 @@ Other methods like _write_, *connect *or *disconnect *from the bluetooth service
 
 The last interesting method here is *scan, *where you try to fetch all the devices available and store them:
 
-<iframe src="https://medium.com/media/93c7ed48182ae1d954410c3b18671540" frameborder=0></iframe>
+`gist:89f3b2cf870782322202de4dab6336f6`
 
 You’ll use the devices list further on when you’ll try to figure out which one is a smart light bulb.
 
@@ -131,11 +131,11 @@ Use the light bulb command service to interact with the device from the UI compo
 
 A naive approach for detecting the device and just fetch the fist one that has ‘_LEDBLE_’ in its name works great. After that you need to connect to it, so it will be ready for receiving messages:
 
-<iframe src="https://medium.com/media/5a878bf14456f7afb26fe086d81bdacc" frameborder=0></iframe>
+`gist:d54e9f4f365b92bffede4dbfff19d0a4`
 
 The second important part here is actually sending a message to the device. Nothing to complicated here, you need to create a message with the correct structure and add data with the correct encoding. Had quite a lot of fun trying to figure out what the light bulb expects but managed to figure it out in the end:
 
-<iframe src="https://medium.com/media/3824082c8346f55e42c809ddbc09ded9" frameborder=0></iframe>
+`gist:14a2bcadbfdc8dc669801ecd66193f82`
 
 The message structure is composed from the device identifier and value to be written along with the service and characteristic ids of the device. This is device specific and is retrieved in the *connect *method*. *Each device can have multiple services with multiple characteristics. Each of them has a set of properties, and if _write_ is specified as true, it means you can write values to it.
 
@@ -143,11 +143,11 @@ The data that you need to write to the light bulb is formed from the RGB colors,
 
 Having this done, you can go back to the component and wire up the connect and update methods in there:
 
-<iframe src="https://medium.com/media/fd743749c1cbd3d7b099e671443634ea" frameborder=0></iframe>
+`gist:356bda602fc0761df41bd4c98bb58e1b`
 
 And voilà, you’re controlling the light color :)
 
-![](https://cdn-images-1.medium.com/max/2000/1*ADeu7XZHPPsdw3HrKKRtVg.png)
+![screenshot of app running](/posts/nativescript-5.png)
 
 ### Source code
 

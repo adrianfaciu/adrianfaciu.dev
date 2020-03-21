@@ -28,9 +28,9 @@ module.exports = {
   ],
   author: {
     name: "Adrian Fâciu",
-    photo: "/myself.jpg",
+    photo: "/myself.png",
     bio:
-      "Passionate software developer. Learning something new each day. Writing code at Visma. Writer for Angular in Depth.",
+      "Passionate software developer. Learning something new each day. Writing code at Visma. Trainer and occasional speaker.",
     contacts: {
       email: "adrian.faciu@gmail.com",
       twitter: "adrianfaciu",

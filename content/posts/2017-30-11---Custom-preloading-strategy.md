@@ -14,9 +14,9 @@ description: "Lets say we have a medium sized Angular application and each large
 
 Lets say we have a medium sized Angular application and each large feature split into a lazy loaded module.
 
-When the application starts, we load only the main modules and all the routes are lazy loaded, including the first one that we navigate to.
+When the application starts, we load only the main modules and all the routes are lazy loaded, including the first one that we navigate to:
 
-<iframe src="https://medium.com/media/345fd58763100129336eaa7b573dcf74" frameborder=0></iframe>
+`gist:78070c4409702e6e4c947150c00774d9`
 
 So what happens is that the app, core and shared modules are loaded, right away we navigate to a feature page and the coresponding module is loaded. When we go to item details page, since the module is lazy loaded, before we do something we have to wait for it to get loaded.
 
@@ -38,7 +38,7 @@ A good strategy here would be to load quickly just what is required and load som
 
 We start by adding a data object to the routes config, so we can leverage this in our custom preloading strategy:
 
-<iframe src="https://medium.com/media/17a21a47426b50fc170211e26dd37ddd" frameborder=0></iframe>
+`gist:7d8c2180e1f4c1bdab54e48d823686ff`
 
 Inside the data object I’ve added two properties, both boolean:
 
@@ -48,7 +48,7 @@ Inside the data object I’ve added two properties, both boolean:
 
 Then we implement the preload method and decide which modules we preload right away and which we load with a small delay:
 
-<iframe src="https://medium.com/media/fcb4a70e98487353e867cf786d545e0a" frameborder=0></iframe>
+`gist:33fb44d7af5909d8dbfacd27c57352e3`
 
 Normally we would just check to see if the route has the preload property set to true and then we would call the load function, if not we would return an observable with null value (this will indicate that we don’t want any preloading):
 
