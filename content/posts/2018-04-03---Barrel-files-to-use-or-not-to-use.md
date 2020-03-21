@@ -4,7 +4,7 @@ date: "2018-03-04T23:46:37.121Z"
 template: "post"
 draft: false
 slug: "/posts/barrel-files/"
-category: "Angular"
+category: "TypeScript"
 tags:
   - "TypeScript"
   - "Angular"
@@ -14,9 +14,9 @@ description: "How to use barrel files inside Angular projects. Should you use th
 
 First of all, what are these **barrel files** ? Using ES2015 modules, we have files from which we export one or more things. Barrel files are a way to **re-export** all or some of these from one, single, convenient place.
 
-You can understand better what they are and how they are used by looking at [this short example](https://basarat.gitbooks.io/typescript/content/docs/tips/barrel.html) from the aswesome *TypeScript deep dive* book.
+You can understand better what they are and how they are used by looking at [this short example](https://basarat.gitbooks.io/typescript/content/docs/tips/barrel.html) from the aswesome _TypeScript deep dive_ book.
 
-Barrel files are named *index,* as convention*, *because most module loaders will look for this by default when [resolving absolute paths](https://webpack.github.io/docs/resolving.html) and this will allow us to omit the filename from the path and just point to a folder. Assuming we have a barrel file in a services folder we’ll import things like:
+Barrel files are named _index,_ as convention*, *because most module loaders will look for this by default when [resolving absolute paths](https://webpack.github.io/docs/resolving.html) and this will allow us to omit the filename from the path and just point to a folder. Assuming we have a barrel file in a services folder we’ll import things like:
 
     import { LoggerService, UserService } from 'app/core/services'
 
@@ -47,7 +47,8 @@ If we have this kind of structure we would want our barrel files inside these ty
     import { DocumentModel, CommentModel } from 'app/+documents/models'
 
 This is short, we can import all the similar things from one place and we see pretty clear what they are. So if we need models from a specific feature we go feature folder name and models folder. If we need services to the same feature folder name and services and so on.
-> Everything should be clear and easy to find. If it’s **not**,** **the structure and/or barrel files are wrong and should be changed.
+
+> Everything should be clear and easy to find. If it’s **not**,\*\* \*\*the structure and/or barrel files are wrong and should be changed.
 
 If you look at an import and you don’t immediately understand what you are importing and from where it’s usually a smell that the structure is not that ok. Similar, if you want to import something and don’t know where to get it from.
 
