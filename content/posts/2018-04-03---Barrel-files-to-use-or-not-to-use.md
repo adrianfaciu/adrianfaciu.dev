@@ -1,5 +1,5 @@
 ---
-title: "Barrel files: to use or not to use ?"
+title: "Barrel files: to use or not to use?"
 date: "2018-03-04T23:46:37.121Z"
 template: "post"
 draft: false
@@ -7,12 +7,14 @@ slug: "/posts/barrel-files/"
 category: "TypeScript"
 tags:
   - "TypeScript"
-  - "Angular"
   - "Structure"
-description: "How to use barrel files inside Angular projects. Should you use them ? If yes, how to organize code around them and where to place these files. Read on to find out more."
+  - "Best practices"
+description: "How to use barrel files in our projects. Should you use them? If yes, how to organize code around them and where to place these files. Read on to find out more."
 ---
 
-First of all, what are these **barrel files** ? Using ES2015 modules, we have files from which we export one or more things. Barrel files are a way to **re-export** all or some of these from one, single, convenient place.
+![barrel files example code](/posts/barrel-files-cover.png)
+
+First of all, what are these **barrel files**? Using ES2015 modules, we have files from which we export one or more things. Barrel files are a way to **re-export** all or some of these from one, single, convenient place.
 
 You can understand better what they are and how they are used by looking at [this short example](https://basarat.gitbooks.io/typescript/content/docs/tips/barrel.html) from the aswesome _TypeScript deep dive_ book.
 
@@ -32,13 +34,13 @@ What I found to work is to have **one level of barrel files** throughout the app
 
 A good way to structure the application is to place files into folders based on features, and inside these folders create subfolders based on the type.
 
-![](https://cdn-images-1.medium.com/max/2000/1*TFfjq0du6EWQeQb6BnVKxg.png)
+![project folders structure example](/posts/barrel-1.png)
 
 In the example above we have a core module, usually found inside [Angular applications](https://angular.io/guide/ngmodule#the-core-module). Inside we have folders for each Angular specific types along with an Angular module.
 
 Similar structure for a feature module:
 
-![](https://cdn-images-1.medium.com/max/2000/1*QpFuMzMmtNq5NiA6TqCIRQ.png)
+![project folders structure example](/posts/barrel-2.png)
 
 Pretty much the same, with some more folders based on types.
 
@@ -48,8 +50,8 @@ If we have this kind of structure we would want our barrel files inside these ty
 
 This is short, we can import all the similar things from one place and we see pretty clear what they are. So if we need models from a specific feature we go feature folder name and models folder. If we need services to the same feature folder name and services and so on.
 
-> Everything should be clear and easy to find. If it’s **not**,\*\* \*\*the structure and/or barrel files are wrong and should be changed.
+> Everything should be clear and easy to find. If it’s **not**, the structure and/or barrel files are wrong and should be changed.
 
 If you look at an import and you don’t immediately understand what you are importing and from where it’s usually a smell that the structure is not that ok. Similar, if you want to import something and don’t know where to get it from.
 
-You should experiment with the structure and using barrel files until you find something that works, usually this is constantly needed as the application grows and evolves. **Never be afraid to change things** in order to make them better 😃
+You should experiment with the structure and using barrel files until you find something that works, usually this is constantly needed as the application grows and evolves. **Never be afraid to change things** in order to make them better 😃.
