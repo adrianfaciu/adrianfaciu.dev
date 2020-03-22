@@ -1,9 +1,7 @@
 ---
-title: "Contact me"
-template: "page"
+title: 'Contact'
+template: 'page'
 ---
 
-Use the links on the left side to get in touch.
-
-![Glasses on a book.](/media/image-4.jpg)
-*Glasses on a book*
+You can use the social links to get in touch.
+If you want to drop me a line you can find me [here](mailto:adrian.faciu@gmail.com).

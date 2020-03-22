@@ -1,9 +1,10 @@
 ---
-title: "About me"
-template: "page"
+title: 'About'
+template: 'page'
 ---
 
-Passionate Software Developer Mainly interested in Web development (TypeScript, Angular) and .Net Framework. Also interested in a lot of other technologies and programming languages, I just don't have enough time for all of them.
+Software developer interested in web development.
 
-![Book on desk](/media/image-2.jpg)
-*Book on desk*
+If for whatever reason, you want my CV, you can find it [here](https://stackoverflow.com/users/story/225780?view=Cv).
+
+I have many hobbies like hiking, playing board games and taking photos. You can see some of them on [Instagram](https://www.instagram.com/adrian.faciu/).
