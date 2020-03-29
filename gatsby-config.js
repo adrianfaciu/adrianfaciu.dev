@@ -185,17 +185,9 @@ module.exports = {
         display: 'standalone',
         icon: 'static/myself.png',
         legacy: false,
-        cache_busting_mode: 'none',
       },
     },
-    {
-      resolve: 'gatsby-plugin-offline',
-      options: {
-        workboxConfig: {
-          globPatterns: ['**/*'],
-        },
-      },
-    },
+    'gatsby-plugin-remove-serviceworker',
     'gatsby-plugin-catch-links',
     'gatsby-plugin-react-helmet',
     {
