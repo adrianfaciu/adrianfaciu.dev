@@ -1,11 +1,14 @@
 import React from 'react';
+import { withPrefix } from 'gatsby';
 import { Helmet } from 'react-helmet';
 import PropTypes from 'prop-types';
 
 import { useSiteMetadata } from '../../hooks';
 
 const SEO = ({ slug, title, description, image, canonical }: Props) => {
-  const { url } = useSiteMetadata();
+  const { url, author } = useSiteMetadata();
+
+  const img = image || url + withPrefix(author.photo);
 
   return (
     <>
@@ -15,7 +18,7 @@ const SEO = ({ slug, title, description, image, canonical }: Props) => {
         {description && (
           <meta property="og:description" content={description} />
         )}
-        {image && <meta property="og:image" content={image} />}
+        {img && <meta property="og:image" content={img} />}
 
         <meta name="twitter:card" content="summary" />
         <meta property="og:type" content="article" />
