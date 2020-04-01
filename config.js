@@ -6,7 +6,7 @@ module.exports = {
   subtitle: 'My personal blog',
   copyright: '© All rights reserved.',
   disqusShortname: '',
-  postsPerPage: 4,
+  postsPerPage: 10,
   googleAnalyticsId: 'UA-139953028-1',
   menu: [
     {
