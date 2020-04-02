@@ -15,14 +15,14 @@ description: 'See how to create a fake REST API using JSON Server. TypeScript wi
 
 Whenever you start working on a new project, you might need to consume an API. But that API might not be written yet, or you don’t want to hit the real thing while developing the app.
 
-In this post we’re gonna have a look at using [JSON Server](https://github.com/typicode/json-server) and [faker.js](https://github.com/Marak/Faker.js#readme) to create a fake REST API. You can use it for local development, testing or any other related tasks.
+In this post we’re going to have a look at using [JSON Server](https://github.com/typicode/json-server) and [faker.js](https://github.com/Marak/Faker.js#readme) to create a fake REST API. You can use it for local development, testing or any other related tasks.
 
 Basic knowledge of [TypeScript](https://www.typescriptlang.org/) and [npm](https://www.npmjs.com/) is required to follow along.
 Out of habit and personal preference, I’ll use [yarn](https://yarnpkg.com/) instead of npm for all the examples.
 
 # Setup
 
-We’re gonna assume you already have a TypeScript project where you want to add and use the fake API. If you do, skip to the next section. If not, and you want to follow along with the code, let’s create a simple project:
+We’re going to assume you already have a TypeScript project where you want to add and use the fake API. If you do, skip to the next section. If not, and you want to follow along with the code, let’s create a simple project:
 
     mkdir fake-rest-api && cd fake-rest-api
     yarn init
@@ -42,7 +42,7 @@ Let’s get started and create our fake API. First, install JSON Server:
 
     yarn add json-server -D
 
-Usually, the server will use JSON files with our data. In our case, we’re gonna use TypeScript, because we want to add a bit of type safety to our fake API. Whenever our types change we want to know and make the appropriate changes in the fake data.
+Usually, the server will use JSON files with our data. In our case, we’re going to use TypeScript, because we want to add a bit of type safety to our fake API. Whenever our types change we want to know and make the appropriate changes in the fake data.
 
 Create a new file _server.ts_, inside a _src_ folder, and add this code to get it up and running:
 
@@ -142,7 +142,7 @@ Since we have all the fake data inside a folder within TypeScript files, we can 
 
 # Fake data
 
-When creating fake test data, we can write it manually or do a request to a real API and get some data back. But we might want to use some random fake data to test our application. For this, we’re gonna use faker.js.
+When creating fake test data, we can write it manually or do a request to a real API and get some data back. But we might want to use some random fake data to test our application. For this, we’re going to use faker.js.
 
 Faker.js is a library for generating random data and has a lot of helpful methods for generating addresses, finance information, names, and many other things. Check the [documentation](https://github.com/Marak/Faker.js) to find out more.
 
