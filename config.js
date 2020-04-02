@@ -21,10 +21,6 @@ module.exports = {
       label: 'Contact',
       path: '/pages/contacts',
     },
-    {
-      label: 'RSS',
-      path: '/rss.xml',
-    },
   ],
   author: {
     name: 'Adrian Fâciu',
