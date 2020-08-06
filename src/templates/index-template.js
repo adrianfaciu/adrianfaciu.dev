@@ -40,7 +40,7 @@ const IndexTemplate = ({ data, pageContext }: Props) => {
           hasPrevPage={hasPrevPage}
           hasNextPage={hasNextPage}
         />
-        <div style={{ 'text-align': 'center' }}>
+        <div style={{ textAlign: 'center' }}>
           <a href="/rss.xml">RSS</a>
         </div>
       </Page>

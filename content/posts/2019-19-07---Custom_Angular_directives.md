@@ -1,23 +1,23 @@
 ---
-title: "Custom Angular directives"
-date: "2019-07-19T23:46:37.121Z"
-template: "post"
+title: 'Custom Angular directives'
+date: '2019-07-19T23:46:37.121Z'
+template: 'post'
 draft: false
-slug: "/posts/aggrid-angular-directives/"
-category: "Angular"
+slug: '/posts/aggrid-angular-directives/'
+category: 'Angular'
 tags:
-  - "Angular"
-  - "Directives"
-  - "AgGrid"
-description: "In this post, we’re gonna talk about one of the most important building blocks of an Angular application. As we know, an application is like a tree of components. And these components are actually directives with a template. We’ll focus on Angular directives, both attribute and structural."
-canonical: "https://blog.ag-grid.com/custom-angular-directives/"
+  - 'Angular'
+  - 'Directives'
+  - 'AgGrid'
+description: 'In this post, we are going to talk about one of the most important building blocks of an Angular application. As we know, an application is like a tree of components. And these components are actually directives with a template. We’ll focus on Angular directives, both attribute and structural.'
+canonical: 'https://blog.ag-grid.com/custom-angular-directives/'
 ---
 
 This is a post written for [AgGrid](https://www.ag-grid.com/), you can see the [original here.](https://blog.ag-grid.com/custom-angular-directives/)
 
 # Intro
 
-In this post, we’re gonna talk about one of the most important building blocks of an [Angular](https://angular.io/) application. As we know, an application is like a tree of components. And these components are actually directives with a template.
+In this post, we are going to talk about one of the most important building blocks of an [Angular](https://angular.io/) application. As we know, an application is like a tree of components. And these components are actually directives with a template.
 
 We’ll focus on Angular directives, both attribute and structural. And we’ll talk a bit about components. What they are and how can we create custom ones. Some basic knowledge of [Angular](https://angular.io/) and [TypeScript](https://www.typescriptlang.org/) is required to follow along.
 
