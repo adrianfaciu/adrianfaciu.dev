@@ -15,7 +15,7 @@ Handling imports is a bit more trickier to manage due to paths and constant refa
 
 When importing modules they are usually separated in two:
 
-- importing libraries modules, which is quite nice, since we use only the name and they are resolved from *node_modules *folder
+- importing libraries modules, which is quite nice, since we use only the name and they are resolved from *node_modules* folder
 
 - importing modules from our own application
 
