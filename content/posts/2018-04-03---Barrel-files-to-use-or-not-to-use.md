@@ -16,17 +16,17 @@ description: "How to use barrel files in our projects. Should you use them? If y
 
 First of all, what are these **barrel files**? Using ES2015 modules, we have files from which we export one or more things. Barrel files are a way to **re-export** all or some of these from one, single, convenient place.
 
-You can understand better what they are and how they are used by looking at [this short example](https://basarat.gitbooks.io/typescript/content/docs/tips/barrel.html) from the aswesome _TypeScript deep dive_ book.
+You can understand better what they are and how they are used by looking at [this short example](https://basarat.gitbook.io/typescript/main-1/barrel) from the aswesome _TypeScript deep dive_ book.
 
-Barrel files are named _index,_ as convention*, *because most module loaders will look for this by default when [resolving absolute paths](https://webpack.github.io/docs/resolving.html) and this will allow us to omit the filename from the path and just point to a folder. Assuming we have a barrel file in a services folder we’ll import things like:
+Barrel files are named _index,_ as convention, because most module loaders will look for this by default when [resolving absolute paths](https://webpack.github.io/docs/resolving.html) and this will allow us to omit the filename from the path and just point to a folder. Assuming we have a barrel file in a services folder we’ll import things like:
 
     import { LoggerService, UserService } from 'app/core/services'
 
-We can use this anywhere in our app if we’re using an absolute path when importing, if you want to know more about this you can check my [short post](https://medium.com/@adrianfaciu/use-absolute-paths-for-module-imports-6e5ee9e94161) 😉
+We can use this anywhere in our app if we’re using an absolute path when importing, if you want to know more about this you can check my [short post](https://adrianfaciu.dev/posts/module-imports/) 😉
 
 There are people arguing that one does not need to use barrel files, at least inside Angular applications since we have [NgModule](https://angular.io/api/core/NgModule). Even the [official documentation](https://angular.io/guide/glossary#barrel) hints towards this.
 
-While we can organize a lot of things with the help of Angular modules, I still prefer to also **use a few barrel files** throughout the application. They greatly simplify the imports and make them look clearer. We just don’t want to have too many barrel files since that is counter productive and usually leads to *circular dependency *issues which sometimes can be quite tricky to resolve.
+While we can organize a lot of things with the help of Angular modules, I still prefer to also **use a few barrel files** throughout the application. They greatly simplify the imports and make them look clearer. We just don’t want to have too many barrel files since that is counter productive and usually leads to *circular dependency* issues which sometimes can be quite tricky to resolve.
 
 So a bad practice would be to create a barrel file inside each folder we have, this is something I would really **not** **recommend**. Tried it once to see how it goes, and let’s just say it did not end well 😃
 
