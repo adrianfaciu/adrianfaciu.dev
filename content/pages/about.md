@@ -16,4 +16,4 @@ Sometimes I present at smaller events/podcasts and some of them are recorded:
 - [Taking Angular offline](https://www.youtube.com/watch?v=-3GHo2GFyVs&t=2s) @ tim.js meetup
 - [Adrian Fâciu](https://devchat.tv/my-angular-story/mas-074-adrian-faciu/) @ My Angular Story
 
-I have many hobbies like hiking, playing board games and taking photos. You can see some of them on [Instagram](https://www.instagram.com/adrian.faciu/).
+I have many hobbies like hiking, playing board games and taking photos.
