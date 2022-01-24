@@ -1,5 +1,5 @@
 ---
-title: 'TypeScript: Exploring (some) complex types'
+title: 'Exploring template literal types in TypeScript'
 date: '2022-01-25T13:00:37.121Z'
 template: 'post'
 draft: false
@@ -13,21 +13,21 @@ tags:
 description: 'Follow me along as I explore two new features of TypeScript 4.1, template literal types and recursive conditional types. All this to create a typed version of a function that reads data from an API.'
 ---
 
-This post will explore my train of thought following a question about how I would type an existing function. The example code was not used in any production app, but it was a nice exercise in working with TypeScript while trying to solve this particular problem.
+This post will explore my train of thought following a question about **how I would type an existing function**. The example code was not used in any production app, but it was a nice exercise in working with TypeScript while trying to solve this particular problem.
 
-We will go a bit deeper by using: (recursive) conditional types, template literal types, mapped types and a suit of other helper types.
-Previous knowledge of [TypeScript](https://www.typescriptlang.org/) is required in order to be able to follow along. Knowing about these types beforehand will also help, but I’ll try to provide links and examples so that you can read more.
+We will go a bit deeper by using (recursive) conditional types, template literal types, index accessed types, and a suite of other helper types.
+Previous knowledge of [TypeScript](https://www.typescriptlang.org/) is required in order to be able to follow along. Knowing about these types beforehand will also help, but I’ll try to provide links and examples for further reading.
 
 So grab your preferred hot beverage and get ready for a post that goes towards the 'heavy to read' end of the spectrum.
 Experimenting with the code as we go along is encouraged, for example on the [TypeScript playground](https://www.typescriptlang.org/play). There is also a link with the solution at the end.
 
 # The problem
 
-Let’s assume we have an existing code base, with a general function that reads data from an API. We can pass it the URL, and the property names that we want to read for that specific object type. Might look something like this:
+Let’s assume we have an existing code base, with a general function that reads data from an API. We can pass it the property names that we want to read for that specific object type, and the URL. Might look something like this:
 
     fetchData(properties, url) {...}
 
-And assuming we have a `Car` object, that looks like this:
+Assuming we have a `Car` object:
 
     type Car = {
         id: number;
@@ -43,7 +43,7 @@ We are specifying that we want the list of cars, but only the `id` and `name` pr
 
 Another possible use case is if you have different clients (web, mobile) that use the same APIs, but they display different data. So this might be useful to fetch what's needed in each case. There are different ways to implement this on the backend, depending on what technology you are using.
 
-Going back to our function, we can think about this as being used inside an existing code base. Our task on hand would be to create a proper typed version of `fetchData`, so that it will be easier to use and make our code better.
+Going back to our function, we can think about this as being used inside an existing code base. Our task at hand would be to create a proper typed version of `fetchData`, so that it will be easier to use and make our code better.
 
 # Return type
 
@@ -55,7 +55,7 @@ Then we can use it as:
 
     const cars = fetchData<Car>('id', '/api/cars')
 
-Now TypeScript will make sure our `cars` variable has the proper type. It’s a bit tricky that we have to explicitly write this, but there is no easy way out of it. We cannot easily map the type to a string, so this is what we have to settle with. All the popular libraries used to fetch data will do something similar to this.
+Now TypeScript will make sure our `cars` variable has the proper type. It’s a bit tricky that we have to explicitly write this, but there is no easy way out of it. We cannot easily map the type to a string, so this is what we have to settle with. All the popular data fetching libraries have an implementation similar to this.
 
 If we want to make sure developers working in this codebase use the correct type, we could encapsulate this at the API layer in one way or another. For example creating a `fetchCars` function:
 
@@ -77,20 +77,24 @@ It will expand into:
 
     type CarKeys = 'id' | 'name' | 'price';
 
-Because these are the properties that we defined on our `Car` type above. Any time we add or remove one from the Car type, the `keyof` derived type will be updated. You can see the [official docs](https://www.typescriptlang.org/docs/handbook/2/keyof-types.html) for more.
+This happens because those are all the properties that we defined on our `Car` type above. Any time we add or remove one from the Car type, the `keyof` derived type will be updated. You can see the [official docs](https://www.typescriptlang.org/docs/handbook/2/keyof-types.html) for more.
 
 So we update our function to fetch data with this knowledge:
 
     function fetchData<T>(properties: keyof T, url: string): T
 
-This seems to work, we can make calls and load data but… we can specify only one property at a time, which is not exactly what we want 😅.
+This works, we can make calls and get back data with what property we want:
 
     // ✅
     fetchData('id', '/api/cars/');
 
+But we can specify **only one property** at a time, which is not exactly what we want 😅.
+
     // ❌
     // Argument of type '"name, id"' is not assignable to parameter of type...
     fetchData('id, name', '/api/cars/');
+
+But before we are going to look at how to implement support for multiple properties, we need to make ourselves conformable with some (new) TypeScript features.
 
 # Template literal and recursive conditional types
 
@@ -127,20 +131,20 @@ Which will get expanded to all possible combinations:
 
 ### Conditional types
 
-The _recursive_ conditional types are our second nice thing. So far, we had [conditional types](https://www.typescriptlang.org/docs/handbook/2/conditional-types.html) already at our disposal. Let's explore them a bit.
+Since [TypeScript 2.8](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-2-8.html) we have [conditional types](https://www.typescriptlang.org/docs/handbook/2/conditional-types.html) at our disposal. Let's explore them a bit.
 
 A simple example of this would be (re)creating the `NonNullable` type. This will remove `null` or `undefined` from types:
 
     type NonNullable<T> = T extends null | undefined ? never : T;
 
-As the name implies, you can think of conditional types like an `if` statement. If the condition is true, resolve to this type, if not, the second one. If the expression is not that familiar, you can have a quick look at the [conditional operator](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Conditional_Operator).
+As the name implies, you can think of conditional types like an `if` statement. If the condition is true, resolve to the first type, if not, the second one. If the expression is not that familiar, you can have a quick look at the [conditional operator](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Conditional_Operator).
 
-We check to see if the generic type matches null or undefined and:
+In the example above, we check to see if the generic type matches null or undefined and:
 
 - if true -> we return `never`
 - if false -> we return the generic type itself
 
-Never is a built in type representing values that are never observed. In our case removing undefined or null:
+In TypeScript, `never` is a built-in type representing values that are _never_ observed. In our case, it removes undefined or null:
 
     // string
     type OnlyString = NonNullable<string | null>;
@@ -150,7 +154,7 @@ Never is a built in type representing values that are never observed. In our cas
 
 ### Recursive conditional types
 
-However, up until TypeScript 4.1, we could not recursively reference the type itself. Let's try to extract the primitive types from an array, also handling the case when we have deeply nested arrays:
+We had conditional types but, up until [TypeScript 4.1](https://devblogs.microsoft.com/typescript/announcing-typescript-4-1/#recursive-conditional-types), we could not recursively reference the type itself. Let's try to extract the primitive types from an array, also handling the case when we have deeply nested arrays:
 
     type ExtractType<T> = T extends Array<infer U> ? ExtractType<U> : T;
 
@@ -187,7 +191,7 @@ Let's start the other way around. One solution would be something like this:
         ? `${Key}, ${KeysOf<Omit<T, Key>>}` | Key
         : never;
 
-Lets go through it step by step. We created a generic type with two arguments, the type of the object we want to use, and an union with property names of that type. By default, this will be a union of all the property names, like we've seen before.
+Lets go through it step by step. We created a generic type with two arguments: the type of the object we want to use and an union with property names of that type. By default, this will be a union of all the property names, like we've seen before.
 
 Then, we use a conditional type to see if the second generic argument, the `Key`, looks like a `string`. This will happen most of the time, for all the properties of our type. When there are no more properties, it will be an empty set, so no string, and we return `never`. This is our way to make sure we don't get into infinite recursive calls.
 
@@ -229,16 +233,16 @@ It will get transformed into:
                     "price, id" | "name, id" | "name, id, price" | "name, price,id" |
                     "price, id, name" | "price, name, id";
 
-There are some ways to solve this without using the second generic argument, but I found this way of doing it more straight forward and we get some extra benefits. If we want, we can generate key combinations based only on some of the properties from an object:
+There are some ways to solve this without using the second generic argument, but I found this way of doing it more straight forward and we get some extra benefits. Notice that we've passed only one generic argument so far, but we can also pass the second to explicitly use only specific keys:
 
-    KeysOf<Car, "engine">
-    KeysOf<Car, "engine" | "name">
+    KeysOf<Car, "id">
+    KeysOf<Car, "id" | "name">
 
 Or just maybe this way of solving it might have been the easiest for me 😅.
 
 # Complex (nested) objects
 
-We can improve further on our type. So far we had a simple car, with properties that have primitive values. But in real life, we might have some more complex types. Maybe the car also has an engine:
+We can further improve on our type. So far we had a simple car, with properties that have primitive values. But in real life, we might have some more complex types. Maybe the car also has an engine:
 
     type Engine = {
       power: number;
@@ -258,9 +262,9 @@ And, in case of the engine property, we could do the same thing, specify only wh
 
 This will mean that we want a list of all the cars, with only the name and engine properties, and on the engine we only need the power property.
 
-In this part we'll make use of the [Record](https://www.typescriptlang.org/docs/handbook/utility-types.html#recordkeys-type) utility type. This helps us check if a type looks like an object, or it is a [primitive type](https://developer.mozilla.org/en-US/docs/Glossary/Primitive). Using `Record` we create an object like type, where the first argument will represent all the properties and the second one the type of those properties. So using something like `Record<string, any>` will create an object that has as properties any `string` and those can have `any` value.
+In this part we'll make use of the [Record](https://www.typescriptlang.org/docs/handbook/utility-types.html#recordkeys-type) utility type. This helps us check if a type looks like an object, or it is a [primitive type](https://developer.mozilla.org/en-US/docs/Glossary/Primitive). Using `Record` we create an object-like type, where the first argument will represent all the properties and the second one the type of those properties. So using something like `Record<string, any>` will create an object that has as properties any `string` and those can have `any` value.
 
-As an alternative, we could have used our own `Primitive` type, or another way to create an object like type.
+As an alternative, we could have used our own `Primitive` type, or another way to create an object-like type.
 
 Knowing this, we can build on our previous version to include an additional check:
 
@@ -270,10 +274,10 @@ Knowing this, we can build on our previous version to include an additional chec
             : `${Key}, ${KeysOf<Omit<T, Key>>}` | Key
         : never;
 
-We have added even another level to our type. After we check that the `Key` is a string, we need to see if the type of that property is a Primitive or not. To get that type, we use the `T[Key]` expression, which is a [mapped type](https://www.typescriptlang.org/docs/handbook/2/mapped-types.html).
+We have added even another level to our type. After we check that the `Key` is a string, we need to see if the type of that property is a Primitive or not. To get that type, we use the `T[Key]` expression, which is an [index accessed type](https://www.typescriptlang.org/docs/handbook/2/indexed-access-types.html).
 Then we do a similar thing, depending on the condition:
 
-- if it looks like an object, we add round brackets and we do a recursive reference to `KeysOf`, passing in the just extracted mapped type
+- if it looks like an object, we add round brackets and we do a recursive reference to `KeysOf`, passing in the just extracted index accessed type
 - if it's not an object, we have the previous code, nothing different here
 
 And this solves the problem of a bit more complex types, as we can see if we check it out:
@@ -289,27 +293,10 @@ It will get transformed into an even more complex thing:
 
 Yes, 68 more options, it indeed has all the possible combinations and we can use any of them to call our function.
 
-# Fetch everything
-
-The last improvement we want to make to our type is the option to specify "all the properties" for any nested objects, by writing an asterisk instead of any property names.
-
-This can be achieved by updating the code where we handle if the mapped property extends a Record: `${Key}(${KeysOfStar<T[Key]> | "*"})`.
-Inside the brackets, we created another union type with the asterisk.
-
-    type KeysOf<T, Key extends keyof T = keyof T> = Key extends string
-        ? T[Key] extends Record<string, any>
-            ? `${Key}(${KeysOf<T[Key]> | "*"})`
-            : `${Key},${KeysOf<Omit<T, Key>>}` | Key
-        : never;
-
-And we could use it to read all the properties for the engine:
-
-    fetchData('name, engine(*)', '/api/cars');
-
 # Conclusion
 
 This was an interesting experiment, and it allowed me to play around with template literals and recursive conditional types. They are quite powerful and can provide useful types for our code. This post is a first in a series of "learning in public" style of articles. More will follow :)
 
-If you want to experiment live with this type, you can use [this TypeScript playground](https://www.typescriptlang.org/play?#code/C4TwDgpgBAogdgcwJZ2gXigbwLACgpRgD2A7hAE4BcUcArgLYBGFA3HgUgCbUDOw5KBG1wBfYXlCQoAYQCG5KBhz4oXanSat2NWfQi9+g4QTACAxvpoNm5Y1AiIUl+MlTCxeCeGgBpCCB4AeQAzAGUkejAAGwgAHgAVABooPxB7AA9gB04eKABrfyJgqHjFfMLi+IA+MtSMrLgcqD4BRG0AfigAAwASTFSRRL7UoLCI6LjA+iRgBOTUqqqRLqgAHxT-bXUIADctXEloOXIABXIiMB5wyJja-1HridjjqvED7w2AkLnP+uzcgogIolMqA4HVO5pCCZf7NQxtFSdeIAbVSAF0-o1cgAlCBmIjkTixFqCZKyOAgKraAidXr9fwiAAUw3u3xR6KWAEoutSoNQ6QMhvSvsFYlMZj8FksVutUlsaLt9ocZPIzhdchgRt8Xm9lVqwsB5JL-JimmDKqCKiUapqTdCGk0SQiaSVUf4MfbYbj8YTifCEGSKVSVC6BQzmcKHobyAk3SA0TV1gAiABUSZE3N5-JZIEGOajRvFsySn0WyzWn3lqD2ti8UmOasuoWjkILMZ1eCAA).
+If you want to experiment live with this type, you can use [this TypeScript playground](https://www.typescriptlang.org/play?#code/C4TwDgpgBAogdgcwJZ2gXigbwLACgpRgD2A7hAE4BcUcArgLYBGFA3HgUgCbUDOw5KBG1wBfYXlCQoAYQCG5KBhz4oXanSat2NWfQi9+g4QTACAxvpoNm5Y1AiIUl+MlTCxeCeGgBpCCB4AeQAzAGUkejAAGwgAHgAVABooPxB7AA9gB04eKABrfyJgqHjFfMLi+IA+MtSMrLgcqD4BRG0AfigAAwASTFSRRL7UoLCI6LjA+iRgBOTUqqqRLqgAHxT-bXUIADctXEloOXIABXIiMB5wyJja-1HridjjqvED7w2AkLnP+uzcgogIolMqA4HVO5pCCZf7NQxtFSdeIAbVSAF0-o1cgAlCBmIjkTixFqCZKyOAgKraAidXr9fwiAAUw3u3xR6KWAEoutSoNQ6QMhvSvsFYlMZj8FksVutUlsaLt9ocZPIzhdchgRt8XsIgA).
 
 Let me know if you would use something like this in production, or what other interesting ways of solving this problem you have.
