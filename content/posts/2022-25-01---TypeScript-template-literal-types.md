@@ -13,13 +13,13 @@ tags:
 description: 'Follow me along as I explore two new features of TypeScript 4.1, template literal types and recursive conditional types. All this to create a typed version of a function that reads data from an API.'
 ---
 
-This post will explore my train of thought following a question about **how I would type an existing function**. The example code was not used in any production app, but it was a nice exercise in working with TypeScript while trying to solve this particular problem.
+This post will explore my train of thought following a question about **how I would type an existing function**. This code was not used in any production app, but it was a good exercise in working with TypeScript while trying to solve this particular problem.
 
 We will go a bit deeper by using (recursive) conditional types, template literal types, index accessed types, and a suite of other helper types.
 Previous knowledge of [TypeScript](https://www.typescriptlang.org/) is required in order to be able to follow along. Knowing about these types beforehand will also help, but I’ll try to provide links and examples for further reading.
 
-So grab your preferred hot beverage and get ready for a post that goes towards the 'heavy to read' end of the spectrum.
-Experimenting with the code as we go along is encouraged, for example on the [TypeScript playground](https://www.typescriptlang.org/play). There is also a link with the solution at the end.
+So grab your favorite hot beverage and get ready for a post that goes towards the 'heavy to read' end of the spectrum.
+Experimenting with the code as we go along is encouraged, for example in the [TypeScript playground](https://www.typescriptlang.org/play). There is also a link with the solution at the end.
 
 # The problem
 
@@ -94,7 +94,7 @@ But we can specify **only one property** at a time, which is not exactly what we
     // Argument of type '"name, id"' is not assignable to parameter of type...
     fetchData('id, name', '/api/cars/');
 
-But before we are going to look at how to implement support for multiple properties, we need to make ourselves conformable with some (new) TypeScript features.
+But before we are going to look at how to implement support for multiple properties, we need to get ourselves conformable with some (new) TypeScript features.
 
 # Template literal and recursive conditional types
 
@@ -191,13 +191,13 @@ Let's start the other way around. One solution would be something like this:
         ? `${Key}, ${KeysOf<Omit<T, Key>>}` | Key
         : never;
 
-Lets go through it step by step. We created a generic type with two arguments: the type of the object we want to use and an union with property names of that type. By default, this will be a union of all the property names, like we've seen before.
+Lets go through it step by step. We created a generic type with two arguments: the type of the object we want to use and an union with property names of that type. By default, this will be a union of all the property names, like we've seen before. In most cases we'll use the generic type by passing in only the first argument, as most of the time we want to go through all of the properties, which is what the default, `keyof T`, value does.
 
 Then, we use a conditional type to see if the second generic argument, the `Key`, looks like a `string`. This will happen most of the time, for all the properties of our type. When there are no more properties, it will be an empty set, so no string, and we return `never`. This is our way to make sure we don't get into infinite recursive calls.
 
 Now, if we still have properties to process, we construct our template literal type: `${Key},${KeysOf<Omit<T, Key>>}`. We want the properties to be separated by a comma, so we add it there. Then we use the same type to create a recursive call.
 
-The trick here is to use the [Omit](https://mariusschulz.com/blog/the-omit-helper-type-in-typescript) helper type. Each time we process a property name, we call the same type recursively, but without the processed property. In this way we handle all of the properties one by one, until we call the type with an empty set. In that case, the `Key` will no longer be a string, so we will return never and stop the recursive call.
+The trick here is to use the [Omit](https://mariusschulz.com/blog/the-omit-helper-type-in-typescript) helper type. Each time we process a property name, we call the same type recursively, but without the processed property. In this way we handle all the properties one by one, until we call the type with an empty set. In that case, the `Key` will no longer be a string, so we will return never and stop the recursive call.
 
     type CarWithoutName = Omit<Car, 'name'>;
 
