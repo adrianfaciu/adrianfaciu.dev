@@ -88,7 +88,7 @@ This works, we can make calls and get back data with what property we want:
     // ✅
     fetchData('id', '/api/cars/');
 
-But we can specify **only one property** at a time, which is not exactly what we want 😅.
+But we can specify **only one property** at a time, which is not exactly what we want 😅:
 
     // ❌
     // Argument of type '"name, id"' is not assignable to parameter of type...
