@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from './Content.module.scss';
+import * as styles from './Content.module.scss';
 
 const Content = ({ body, title }) => (
   <div className={styles['content']}>

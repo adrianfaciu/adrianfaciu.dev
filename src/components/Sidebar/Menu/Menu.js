@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'gatsby';
-import styles from './Menu.module.scss';
+import * as styles from './Menu.module.scss';
 
 const menuItem = item =>
   item.path.startsWith('http') ? externalLink(item) : internalLink(item);

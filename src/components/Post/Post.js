@@ -5,7 +5,7 @@ import Comments from './Comments';
 import Content from './Content';
 import Meta from './Meta';
 import Tags from './Tags';
-import styles from './Post.module.scss';
+import * as styles from './Post.module.scss';
 import SEO from '../Seo';
 
 const Post = ({ post }) => {
