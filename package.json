@@ -113,6 +113,7 @@
     "standard-version": "9.5.0",
     "stylelint": "15.10.3",
     "stylelint-config-recommended-scss": "13.0.0",
-    "stylelint-scss": "5.2.1"
+    "stylelint-scss": "5.2.1",
+    "webpack-filter-warnings-plugin": "^1.2.1"
   }
 }
