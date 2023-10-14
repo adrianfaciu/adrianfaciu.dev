@@ -6,7 +6,7 @@ module.exports = {
   subtitle: 'My personal blog',
   copyright: '© All rights reserved.',
   disqusShortname: '',
-  postsPerPage: 10,
+  postsPerPage: 30,
   googleAnalyticsId: '',
   menu: [
     {
@@ -30,6 +30,8 @@ module.exports = {
     contacts: {
       email: 'adrian.faciu@hey.com',
       github: 'adrianfaciu',
+      twitter: '',
+      stackoverflow: 'adrianfaciu',
       rss: '#',
       linkedin: 'adrianfaciu',
     },
