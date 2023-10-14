@@ -35,7 +35,7 @@ const IndexTemplate = ({ data, pageContext }) => {
             hasNextPage={hasNextPage}
           />
         )}
-        <div style={{ textAlign: 'center' }}>
+        <div style={{ textAlign: 'center', position: 'relative', top: '40px' }}>
           <a href="/rss.xml">RSS</a>
         </div>
       </Page>
