@@ -6,7 +6,7 @@ const menuItem = item =>
   item.path.startsWith('http') ? externalLink(item) : internalLink(item);
 
 const externalLink = item => (
-  <li className={styles['menu__list-item']} key={item.path}>
+  <li className={styles['menu__listItem']} key={item.path}>
     <a href={item.path} target="_blank">
       {item.label}
     </a>
@@ -14,11 +14,11 @@ const externalLink = item => (
 );
 
 const internalLink = item => (
-  <li className={styles['menu__list-item']} key={item.path}>
+  <li className={styles['menu__listItem']} key={item.path}>
     <Link
       to={item.path}
-      className={styles['menu__list-item-link']}
-      activeClassName={styles['menu__list-item-link--active']}
+      className={styles['menu__listItemLink']}
+      activeClassName={styles['menu__listItemLinkActive']}
     >
       {item.label}
     </Link>

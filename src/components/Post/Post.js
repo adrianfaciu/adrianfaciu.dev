@@ -17,7 +17,7 @@ const Post = ({ post }) => {
     <>
       <SEO {...{ title, description, slug, canonical }} />
       <div className={styles['post']}>
-        <Link className={styles['post__home-button']} to="/">
+        <Link className={styles['post__homeButton']} to="/">
           All Articles
         </Link>
 
