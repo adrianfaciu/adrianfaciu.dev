@@ -1,18 +1,8 @@
-// @flow
 import React from 'react';
 import { withPrefix, Link } from 'gatsby';
 import styles from './Author.module.scss';
 
-type Props = {
-  author: {
-    name: string,
-    bio: string,
-    photo: string,
-  },
-  isIndex: ?boolean,
-};
-
-const Author = ({ author, isIndex }: Props) => (
+const Author = ({ author, isIndex }) => (
   <div className={styles['author']}>
     <Link to="/">
       <img

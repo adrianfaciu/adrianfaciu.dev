@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 
 import { useSiteMetadata } from '../../hooks';
 
-const SEO = ({ slug, title, description, image, canonical }: Props) => {
+const SEO = ({ slug, title, description, image, canonical }) => {
   const { url, author } = useSiteMetadata();
 
   const img = image || url + withPrefix(author.photo);

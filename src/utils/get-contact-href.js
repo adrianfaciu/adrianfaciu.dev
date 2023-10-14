@@ -1,30 +1,29 @@
-// @flow
-const getContactHref = (name: string, contact: string) => {
+const getContactHref = (name, contact) => {
   let href;
 
   switch (name) {
-    case "twitter":
+    case 'twitter':
       href = `https://www.twitter.com/${contact}`;
       break;
-    case "github":
+    case 'github':
       href = `https://github.com/${contact}`;
       break;
-    case "vkontakte":
+    case 'vkontakte':
       href = `https://vk.com/${contact}`;
       break;
-    case "telegram":
+    case 'telegram':
       href = `telegram:${contact}`;
       break;
-    case "email":
+    case 'email':
       href = `mailto:${contact}`;
       break;
-    case "stackoverflow":
+    case 'stackoverflow':
       href = `https://stackoverflow.com/users/225780/${contact}`;
       break;
-    case "medium":
+    case 'medium':
       href = `https://medium.com/@${contact}`;
       break;
-    case "linkedin":
+    case 'linkedin':
       href = `https://www.linkedin.com/in/${contact}`;
       break;
     default:

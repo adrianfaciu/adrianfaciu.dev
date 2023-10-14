@@ -1,4 +1,3 @@
-// @flow
 type CSSModule = {
   [key: string]: string,
 };
