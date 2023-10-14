@@ -16,12 +16,12 @@ const Post = ({ post }) => {
   return (
     <>
       <SEO {...{ title, description, slug, canonical }} />
-      <div className={styles['post']}>
+      <div>
         <Link className={styles['post__homeButton']} to="/">
           All Articles
         </Link>
 
-        <div className={styles['post__content']}>
+        <div>
           <Content body={html} title={title} />
         </div>
 

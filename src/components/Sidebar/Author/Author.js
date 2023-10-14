@@ -3,7 +3,7 @@ import { withPrefix, Link } from 'gatsby';
 import * as styles from './Author.module.scss';
 
 const Author = ({ author, isIndex }) => (
-  <div className={styles['author']}>
+  <div>
     <Link to="/">
       <img
         src={withPrefix(author.photo)}

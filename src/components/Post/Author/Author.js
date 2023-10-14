@@ -6,7 +6,7 @@ import { useSiteMetadata } from '../../../hooks';
 const Author = ({ title, slug }) => {
   const { author, url } = useSiteMetadata();
 
-  return <div className={styles['author']}></div>;
+  return <div></div>;
 };
 
 export default Author;
