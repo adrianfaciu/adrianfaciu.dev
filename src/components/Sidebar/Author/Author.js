@@ -28,9 +28,9 @@ const Author = ({ author, isIndex }) => (
       </h2>
     )}
     <p className={styles['author__subtitle']}>
-      Passionate software developer. Learning something new each day. Writing
-      code at {<a href="https://www.wevideo.com/">WeVideo</a>}. Trainer and
-      occasional speaker.
+      Principal software engineer. Focused on front-end. Learning something new
+      each day. Building things at{' '}
+      {<a href="https://www.wevideo.com/">WeVideo</a>}.
     </p>
   </div>
 );

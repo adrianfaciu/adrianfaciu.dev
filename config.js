@@ -26,14 +26,11 @@ module.exports = {
     name: 'Adrian Fâciu',
     photo: '/myself.jpg',
     bio:
-      'Passionate software developer. Learning something new each day. Writing code at WeVideo. Trainer and occasional speaker.',
+      'Principal software engineer. Focused on front-end. Learning something new each day. Building things at WeVideo.',
     contacts: {
-      email: 'adrian.faciu@gmail.com',
-      twitter: 'adrianfaciu',
+      email: 'adrian.faciu@hey.com',
       github: 'adrianfaciu',
       rss: '#',
-      stackoverflow: 'adrian-f%c3%a2ciu',
-      medium: 'adrianfaciu',
       linkedin: 'adrianfaciu',
     },
   },
