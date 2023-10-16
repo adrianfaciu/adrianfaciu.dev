@@ -3,15 +3,15 @@ title: 'About'
 template: 'page'
 ---
 
-I am mostly interested in **front-end development** and **technical leadership**.
+My main areas of interest are **front-end development** and **technical leadership**.
 
-I'm excited about many technologies and I'm always trying to get better at what I do. Not afraid to open a terminal and always trying to understand how things work. Trying to be as unopinionated as possible and get the best out of any technology or framework.
+I am constantly seeking to improve my skills and knowledge, and I am always eager to learn about new technologies. I am not afraid to get my hands dirty and dive into the technical details, always striving to understand how things work. I try to be as open-minded as possible, and I believe that every technology or framework has something valuable to offer.
 
-I've started with .NET/C# around 2008/2009 and moved towards front-end some years ago. I'm still involved in the technical side of things as much as possible, but lately I've focused more on understanding what a Staff+ engineer does and what should we do as technical leaders for a greater impact.
+I began my career with .NET/C# back in 2008/2009, but I have since shifted my focus towards front-end development. While I still enjoy working on the technical side of things, I am now more interested in exploring the role of a Staff+ engineer and how I can contribute to technical leadership for greater impact in the organization.
 
-For the first two editions, in 2019 and 2023 I was involved in organizing [revo.js conference](https://revojs.ro/). This is a not-for-profit event taking place in Timișoara, Romania.
+In 2019 and 2023, I had the pleasure of being involved in organizing the [Revo.js conference](https://revojs.ro/) - a not-for-profit event held in Timișoara, Romania.
 
-#### Sometimes I present at smaller events. I was invited to a few podcasts or even host workshops:
+#### Sometimes I present at smaller events, and I've been invited to a few podcasts or even hosted workshops:
 
 - Beyond senior @ All-stack hangout
 - What it means to be a senior developer @ tim.js meetup
@@ -29,4 +29,4 @@ For the first two editions, in 2019 and 2023 I was involved in organizing [revo.
 - Angular state management (2 days) @ internal Visma workshop
 - Angular Workshop (3 days) @ internal Visma workshop
 
-I have many hobbies like hiking, running, playing board/video games, taking photos and so on. It's like each month I find a new one :)
+I have a variety of hobbies like hiking, running, playing board and video games, and taking photos. Every month, I discover a new one!
