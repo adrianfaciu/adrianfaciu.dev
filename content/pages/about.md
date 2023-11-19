@@ -13,6 +13,7 @@ In 2019 and 2023, I had the pleasure of being involved in organizing the [Revo.j
 
 #### Sometimes I present at smaller events, and I've been invited to a few podcasts or even hosted workshops:
 
+- Adrian Fâciu @ "Zeamă de Developer" podcast
 - Beyond senior @ All-stack hangout
 - What it means to be a senior developer @ tim.js meetup
 - SPA, SSR, SSG: How Remix gets the best of all worlds @ tim.js meetup
