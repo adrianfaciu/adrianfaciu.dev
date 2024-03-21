@@ -13,6 +13,7 @@ In 2019 and 2023, I had the pleasure of being involved in organizing the [Revo.j
 
 #### Sometimes I present at smaller events, and I've been invited to a few podcasts or even hosted workshops:
 
+- Technical leadership for individual contributors @ tim.js meetup
 - How to be a senior developer @ BudapestJS
 - How to be a senior developer @ Sibiu Web Meetup
 - Technical leadership: who, what & how @ JsHeroes meetup
