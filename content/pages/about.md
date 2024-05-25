@@ -11,27 +11,4 @@ I began my career with .NET/C# back in 2008/2009, but I have since shifted my fo
 
 In 2019 and 2023, I had the pleasure of being involved in organizing the [Revo.js conference](https://revojs.ro/) - a not-for-profit event held in Timișoara, Romania.
 
-#### Sometimes I present at smaller events, and I've been invited to a few podcasts or even hosted workshops:
-
-- Technical leadership for individual contributors @ tim.js meetup
-- How to be a senior developer @ BudapestJS
-- How to be a senior developer @ Sibiu Web Meetup
-- Technical leadership: who, what & how @ JsHeroes meetup
-- Adrian Fâciu @ "Zeamă de Developer" podcast
-- Beyond senior @ All-stack hangout
-- What it means to be a senior developer - lightning talk @ tim.js meetup
-- SPA, SSR, SSG: How Remix gets the best of all worlds @ tim.js meetup
-- Sharing code at runtime: module federation @ tim.js meetup
-- TypeScript @ internal WeVideo presentation
-- Web components with LitElement @ tim.js meetup
-- Web components for everyone @ Codecamp Timisoara
-- NgRx Tips & Tricks @ Voxxed Days Frontend Bucharest
-- NgRx Workshop @ Voxxed Days Frontend Bucharest
-- Adrian Fâciu @ My Angular Story podcast
-- Taking Angular offline @ tim.js meetup
-- NgRx Tips & Tricks @ Adventures in Angular podcast
-- Barrel files: to use or not to use @ tim.js meetup
-- Angular state management (2 days) @ internal Visma workshop
-- Angular Workshop (3 days) @ internal Visma workshop
-
 I have a variety of hobbies like hiking, running, playing board and video games, and taking photos. Every month, I discover a new one!

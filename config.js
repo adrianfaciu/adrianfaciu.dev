@@ -2,16 +2,20 @@
 
 module.exports = {
   url: 'https://adrianfaciu.dev',
-  title: 'Blog by Adrian Fâciu',
-  subtitle: 'My personal blog',
+  title: 'adrianfaciu.dev',
+  subtitle: 'My personal website',
   copyright: '© All rights reserved.',
   disqusShortname: '',
   postsPerPage: 30,
   googleAnalyticsId: '',
   menu: [
     {
-      label: 'Articles',
+      label: 'Blog',
       path: '/',
+    },
+    {
+      label: 'Talks',
+      path: '/pages/talks',
     },
     {
       label: 'About',
@@ -28,12 +32,12 @@ module.exports = {
     bio:
       'Principal software engineer. Focused on front-end. Learning something new each day. Building things at WeVideo.',
     contacts: {
-      email: 'adrian.faciu@hey.com',
-      github: 'adrianfaciu',
-      twitter: '',
-      stackoverflow: 'adrianfaciu',
-      rss: '#',
       linkedin: 'adrianfaciu',
+      github: 'adrianfaciu',
+      stackoverflow: 'adrianfaciu',
+      email: 'adrian.faciu@hey.com',
+      twitter: '',
+      rss: '#',
     },
   },
 };

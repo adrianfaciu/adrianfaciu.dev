@@ -12,8 +12,8 @@ const useSiteMetadata = () => {
               photo
               contacts {
                 linkedin
-                stackoverflow
                 github
+                stackoverflow
               }
             }
             menu {
