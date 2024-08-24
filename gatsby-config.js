@@ -114,7 +114,10 @@ module.exports = {
             resolve: 'gatsby-remark-embed-gist',
             options: {
               username: 'adrianfaciu',
-              includeDefaultCss: true,
+              gistDefaultCssInclude: true,
+              gistCssPreload: true,
+              gistCssUrlAddress:
+                'https://github.githubassets.com/assets/gist-embed-f2e26e2257bd.css',
             },
           },
           'gatsby-remark-autolink-headers',
