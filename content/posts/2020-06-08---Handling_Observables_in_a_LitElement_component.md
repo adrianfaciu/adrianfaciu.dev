@@ -25,103 +25,122 @@ We’re going to have a look at how to use RxJs inside a LitElement web componen
 
 Let’s define a basic LitElement component that we are going to use for our examples:
 
-    import { LitElement, html, customElement } from 'lit-element';
+```ts
+import { LitElement, html, customElement } from 'lit-element';
 
-    @customElement('my-element')
-    class MyElement extends LitElement {
-      render() {
-        return html`
-          <p>This is a sample LitElement</p>
-        `;
-      }
-    }
+@customElement('my-element')
+class MyElement extends LitElement {
+  render() {
+    return html`
+      <p>This is a sample LitElement</p>
+    `;
+  }
+}
+```
 
 A simple class that extends from LitElement and renders a text. We use the customElement decorator to register the class as a web component.
 
 Our purpose is to have an Observable and render it inside our component. For a sample stream, we are going to use an interval and take the first ten items from it:
 
-    import { interval } from 'rxjs';
-    import { take } from 'rxjs/operators';
+```ts
+import { interval } from 'rxjs';
+import { take } from 'rxjs/operators';
 
-    values$ = interval(1000).pipe(take(10));
+values$ = interval(1000).pipe(take(10));
+```
 
 We generate a new value each second, starting from 0 and we take the first 10. We would like to render this inside our component:
 
-    import { LitElement, html, customElement } from 'lit-element';
+```ts
+import { LitElement, html, customElement } from 'lit-element';
 
-    import { interval } from 'rxjs';
-    import { take } from 'rxjs/operators';
+import { interval } from 'rxjs';
+import { take } from 'rxjs/operators';
 
-    @customElement('my-element')
-    class MyElement extends LitElement {
-      values$ = interval(1000).pipe(take(10));
+@customElement('my-element')
+class MyElement extends LitElement {
+  values$ = interval(1000).pipe(take(10));
 
-      render() {
-        return html`
-          <ul>
-            <li>Render all items here</li>
-          </ul>
-        `;
-      }
-    }
+  render() {
+    return html`
+      <ul>
+        <li>Render all items here</li>
+      </ul>
+    `;
+  }
+}
+```
 
 Working with Observables inside a LitElement is easy enough, but it involves a bit of code. We need at least to subscribe and schedule an update for anything to show up:
 
-    @customElement('my-element')
-    class MyElement extends LitElement {
-      values$ = interval(1000).pipe(take(10));
-      data = [];
+```ts
+@customElement('my-element')
+class MyElement extends LitElement {
+  values$ = interval(1000).pipe(take(10));
+  data = [];
 
-      connectedCallback() {
-        super.connectedCallback();
-        this.values$.subscribe(value => {
-            this.data = [value, ...this.data];
-            this.requestUpdate();
-          });
-      }
+  connectedCallback() {
+    super.connectedCallback();
+    this.values$.subscribe(value => {
+      this.data = [value, ...this.data];
+      this.requestUpdate();
+    });
+  }
 
-      render() {
-        return html`
-          <ul>
-            ${this.data.map(item => html`<li>${item}</li>`)}
-          </ul>
-        `;
-      }
-    }
+  render() {
+    return html`
+      <ul>
+        ${this.data.map(
+          item =>
+            html`
+              <li>${item}</li>
+            `
+        )}
+      </ul>
+    `;
+  }
+}
+```
 
 The connected callback life cycle hook is called when the component is added to the document’s DOM. Here, we want to subscribe to our stream and update the property in our class. Since LitElement is not tracking our _data_ property, we need to manually request an update each time the value changes.
 
 In this case, it’s good enough, because our observable will finish after ten items and clean everything up. But what happens if we remove the **take** method call? We would like to unsubscribe and clean up when our component is removed from the DOM. So we have to add a bit more code to handle that:
 
-    @customElement('my-element')
-    class MyElement extends LitElement {
-      unsubscribe$ = new Subject();
-      values$ = interval(1000);
-      data = [];
+```ts
+@customElement('my-element')
+class MyElement extends LitElement {
+  unsubscribe$ = new Subject();
+  values$ = interval(1000);
+  data = [];
 
-      connectedCallback() {
-        super.connectedCallback();
-        this.values$.pipe(takeUntil(this.unsubscribe$))
-         .subscribe(value => {
-            this.data = [value, ...this.data];
-            this.requestUpdate();
-          });
-      }
+  connectedCallback() {
+    super.connectedCallback();
+    this.values$.pipe(takeUntil(this.unsubscribe$)).subscribe(value => {
+      this.data = [value, ...this.data];
+      this.requestUpdate();
+    });
+  }
 
-      disconnectedCallback() {
-        super.disconnectedCallback();
-        this.unsubscribe$.next();
-        this.unsubscribe$.complete();
-      }
+  disconnectedCallback() {
+    super.disconnectedCallback();
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
+  }
 
-      render() {
-        return html`
-          <ul>
-            ${this.data.map(item => html`<li>${item}</li>`)}
-          </ul>
-        `;
-      }
-    }
+  render() {
+    return html`
+      <ul>
+        ${this.data.map(
+          item =>
+            html`
+              <li>${item}</li>
+            `
+        )}
+      </ul>
+    `;
+  }
+}
+```
 
 To achieve this, we’ve created a [Subject](https://rxjs.dev/api/index/class/Subject), this is a special type of Observable that also allows us to emit values. We used this inside the disconnected callback to send a new value whenever the life cycle hook is called. Before we subscribe we use the [takeUntil](https://rxjs.dev/api/operators/takeUntil) operator to emit the values from the source observable, but only until something is emitted on the unsubscribe stream.
 
@@ -148,48 +167,61 @@ The next option, a base class, is a good, working, option. One advantage is that
 
 We want to provide a **subscribe** method, that could be used inside a component to subscribe to an Observable and request an update whenever new data comes in. Something like:
 
-    connectedCallback() {
-        super.connectedCallback();
-        this.subscribe('data', this.values$);
-      }
+```ts
+connectedCallback() {
+  super.connectedCallback();
+  this.subscribe('data', this.values$);
+}
+```
 
 We start with something simple, the base class and a simple implementation for the subscribe method:
 
-    export abstract class RxLitElement extends LitElement {
-      subscribe(propertyName, stream) {
-        stream.subscribe(value => {
-          this[propertyName] = value;
-          this.requestUpdate();
-        });
-      }
-    }
+```ts
+export abstract class RxLitElement extends LitElement {
+  subscribe(propertyName, stream) {
+    stream.subscribe(value => {
+      this[propertyName] = value;
+      this.requestUpdate();
+    });
+  }
+}
+```
 
 We get the stream and the property name where we want to place the values. We subscribe to the stream, update the class property with new values, and request an update so that our UI will reflect the new data.
 
 Then we can update our component and use our new base class:
 
-    @customElement('my-element')
-    class MyElement extends RxLitElement {
-      values$ = interval(1000);
-      data = [];
+```ts
+@customElement('my-element')
+class MyElement extends RxLitElement {
+  values$ = interval(1000);
+  data = [];
 
-      connectedCallback() {
-        super.connectedCallback();
-        this.subscribe('data', this.values$);
-      }
+  connectedCallback() {
+    super.connectedCallback();
+    this.subscribe('data', this.values$);
+  }
 
-      render() {
-        return html`
-          <ul>
-            ${this.data.map(item => html`<li>${item}</li>`)}
-          </ul>
-        `;
-      }
-    }
+  render() {
+    return html`
+      <ul>
+        ${this.data.map(
+          item =>
+            html`
+              <li>${item}</li>
+            `
+        )}
+      </ul>
+    `;
+  }
+}
+```
 
 If you run this, you will see that nothing happens. This is because we expect that _data_ is an array and in this case, it’s only a value. We can slightly update our stream to transform it into an array with all the values so far. We’ll use [scan](https://rxjs.dev/api/operators/scan) operator to transform it:
 
-    values$ = interval(1000).pipe(scan((acc, value) => [value,...acc], []));
+```ts
+values$ = interval(1000).pipe(scan((acc, value) => [value, ...acc], []));
+```
 
 The scan operator is similar to reduce, but it emits each intermediate result. We start with an empty array, for each value we append it to the array and emit the result. Now everything works as before, and all the code that handles the subscribe is abstracted in our base class.
 
@@ -199,32 +231,38 @@ As a possible future improvement, we could pass in a function to our subscribe m
 
 The first thing that we want to improve is the typing, we want to make sure we send in an Observable and a property name that exists in our class:
 
+```ts
     subscribe<Key extends keyof this>(
       propKey: Key,
       stream$: Observable<this[Key]>
     ) { }
+```
 
 Using `keyof this` we create a subtype of string that can have as values only the property names defined in our class. If we have an interface with some properties:
 
-    interface Person {
-      name: string;
-      age: number;
-      location: string;
-    }
+```ts
+interface Person {
+  name: string;
+  age: number;
+  location: string;
+}
 
-    type K1 = keyof Person; // "name" | "age" | "location"
+type K1 = keyof Person; // "name" | "age" | "location"
+```
 
 We defined our method with a generic Key type parameter that extends from this sub type `Key` `extends` `keyof` `this`. In this way, we make sure we can pass in only properties that exist in our class.
 
 Next, we can define the stream as an Observable, but we need a type for that. We have to use lookup types, to make sure that the type of the values emitted by the Observable is the same as the type of the property that will receive them:
 
-    interface Person {
-      name: string;
-      age: number;
-      location: string;
-    }
+```ts
+interface Person {
+  name: string;
+  age: number;
+  location: string;
+}
 
-    type P1 = Person["name"]; // string
+type P1 = Person['name']; // string
+```
 
 Using lookup types, we can take the defined type of our property, and make an Observable of that specific type.
 
@@ -237,27 +275,29 @@ The first improvement is to unsubscribe from the Observable when our component i
 
 To use this we create a [Subject](https://rxjs.dev/api/index/class/Subject), that will emit a value when the component disconnected callback is called. Then we’ll use it before we subscribe to our stream:
 
-    const unsubscribe = Symbol('unsubscribe');
+```ts
+const unsubscribe = Symbol('unsubscribe');
 
-    export abstract class RxLitElement extends LitElement {
-      [unsubscribe] = new Subject();
+export abstract class RxLitElement extends LitElement {
+  [unsubscribe] = new Subject();
 
-     subscribe<Key extends keyof this>(
-        propKey: Key,
-        stream$: Observable<this[Key]>
-      ) {
-      stream.pipe(takeUntil(this[unsubscribe])).subscribe(value => {
-          this[propertyName] = value;
-          this.requestUpdate();
-        }
-      }
-
-      disconnectedCallback() {
-        this[unsubscribe].next();
-        this[unsubscribe].complete();
-        super.disconnectedCallback();
+  subscribe<Key extends keyof this>(
+    propKey: Key,
+    stream$: Observable<this[Key]>
+  ) {
+    stream.pipe(takeUntil(this[unsubscribe])).subscribe(value => {
+        this[propertyName] = value;
+        this.requestUpdate();
       }
     }
+
+  disconnectedCallback() {
+    this[unsubscribe].next();
+    this[unsubscribe].complete();
+    super.disconnectedCallback();
+  }
+}
+```
 
 We used a [symbol](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol) to define the unsubscribe subject to make sure it’s unique, so it does not clash with other user-defined properties, and that by default it’s not accessible from outside our base class.
 
@@ -267,42 +307,52 @@ This is the basic working implementation, but we can add some more features that
 
 For safe programming practices, we can check that the stream we get inside our subscribe method is indeed an Observable. We get all the type checking at runtime. RxJs has a method called [isObservable](https://rxjs.dev/api/index/function/isObservable) that we can take advantage of:
 
-    if (!isObservable(stream$)) throw new Error('Invalid Observable!');
+```ts
+if (!isObservable(stream$)) throw new Error('Invalid Observable!');
+```
 
 If we want to be extra safe, we can even check the property:
 
-    if (!this.hasOwnProperty(propKey)) throw new Error('Invalid property name');
+```ts
+if (!this.hasOwnProperty(propKey)) throw new Error('Invalid property name');
+```
 
 Now to some more useful features, we might want to call the subscribe method several times in our component life cycle, for the same property, with different streams. We want to handle this, meaning unsubscribe from the old observable before subscribing to the new one. And ignoring subscribe calls for the same property and the same Observable.
 
 For this, we need to remember the subscriptions and the stream that was used to create them. What we want to get a hold of:
 
-    interface ExistingSubscription {
-      stream$?: Observable<unknown>;
-      subscription?: Subscription;
-    }
+```ts
+interface ExistingSubscription {
+  stream$?: Observable<unknown>;
+  subscription?: Subscription;
+}
+```
 
 We can create a map with all this information:
 
-    const subscriptions = Symbol('subscriptions');
+```ts
+const subscriptions = Symbol('subscriptions');
 
-    [subscriptions] = new Map<keyof this, ExistingSubscription>();
+[subscriptions] = new Map<keyof this, ExistingSubscription>();
+```
 
 And work with it inside our subscribe method:
 
-    subscribe<Key extends keyof this>(
-        propKey: Key,
-        stream$: Observable<this[Key]>
-      ) {
-        const existingSubscription = this[subscriptions].get(propKey);
-        if (existingSubscription) {
-          if (existingSubscription?.stream$ === stream$) return;
-          else existingSubscription?.subscription?.unsubscribe();
-        }
-        const subscription = stream$.pipe(...);
+```ts
+subscribe<Key extends keyof this>(
+    propKey: Key,
+    stream$: Observable<this[Key]>
+  ) {
+    const existingSubscription = this[subscriptions].get(propKey);
+    if (existingSubscription) {
+      if (existingSubscription?.stream$ === stream$) return;
+      else existingSubscription?.subscription?.unsubscribe();
+    }
+    const subscription = stream$.pipe(...);
 
-        this[subscriptions].set(propKey, { stream$, subscription });
-      }
+    this[subscriptions].set(propKey, { stream$, subscription });
+  }
+```
 
 We check to see if we already have a subscription for that property name. If yes, in case it’s the same stream, we ignore the call, no need to do anything. If it’s a different stream, we unsubscribe from the old one before handling it. In the end, we store the new subscription and stream combination using the property name as a key.
 
@@ -321,18 +371,20 @@ That is, by creating a decorator that will do this for us. Decorators are an exp
 
 A decorator is a special kind of function that can be attached to classes, methods, properties, or arguments. They are used in the form of `@expression` where expression is the name of the function. In our case we use subscribe:
 
-    export const subscribe = (stream: Observable<any>) => <K extends RxLitElement>(
-      targetPrototype: K,
-      propertyKey: keyof K
-    ) => {
-      if (!stream) throw new Error('Invalid stream!');
+```ts
+export const subscribe = (stream: Observable<any>) => <K extends RxLitElement>(
+  targetPrototype: K,
+  propertyKey: keyof K
+) => {
+  if (!stream) throw new Error('Invalid stream!');
 
-      const initial = targetPrototype.connectedCallback;
-      targetPrototype.connectedCallback = function () {
-        initial?.call(this);
-        this.subscribe(propertyKey, stream);
-      };
-    };
+  const initial = targetPrototype.connectedCallback;
+  targetPrototype.connectedCallback = function() {
+    initial?.call(this);
+    this.subscribe(propertyKey, stream);
+  };
+};
+```
 
 Since we want to customize how the decorator is applied to our property we created a decorator factory. That is a function that returns another function. A decorator for a property is always a function that gets the prototype and the property key, but we also want to pass in a stream for each use.
 
@@ -340,10 +392,12 @@ Inside the function, we monkey patch the connected callback method of our class 
 
 And we can use it for our components to simplify code even further:
 
-    class DemoElement extends RxLitElement {
-      @subscribe(interval(1000).pipe(scan((acc, value) => [value,...acc], [])))
-      streamValues: number[];
-    }
+```ts
+class DemoElement extends RxLitElement {
+  @subscribe(interval(1000).pipe(scan((acc, value) => [value, ...acc], [])))
+  streamValues: number[];
+}
+```
 
 The limitation on what streams we can use here comes from the way decorators work. We don’t have access to the class instance at the moment when the decorator is parsed, so there is no way to access the instance variables there. Hence the limitation.
 
