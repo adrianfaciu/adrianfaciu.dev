@@ -1,15 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import * as styles from './Scroll.module.scss';
 
-function isContentScrolled() {
-  return window?.scrollY > 300;
-}
-
 const Scroll = () => {
-  const [isVisible, setIsVisible] = useState(isContentScrolled());
+  const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
-    const toggleVisibility = () => setIsVisible(isContentScrolled());
+    const toggleVisibility = () => setIsVisible(window?.scrollY > 300);
 
     toggleVisibility();
     window.addEventListener('scroll', toggleVisibility);
@@ -18,7 +14,7 @@ const Scroll = () => {
   }, []);
 
   const scrollToTop = () => {
-    window.scrollTo({
+    window?.scrollTo({
       top: 0,
       behavior: 'smooth',
     });
