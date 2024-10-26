@@ -13,7 +13,9 @@ const useSiteMetadata = () => {
               contacts {
                 linkedin
                 github
+                bluesky
                 stackoverflow
+                rss
               }
             }
             menu {

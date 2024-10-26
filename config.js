@@ -36,8 +36,8 @@ module.exports = {
       github: 'adrianfaciu',
       stackoverflow: 'adrianfaciu',
       email: 'adrian.faciu@hey.com',
-      twitter: '',
-      rss: '#',
+      bluesky: 'adrianfaciu.dev',
+      rss: 'rss.xml',
     },
   },
 };

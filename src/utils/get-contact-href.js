@@ -26,6 +26,9 @@ const getContactHref = (name, contact) => {
     case 'linkedin':
       href = `https://www.linkedin.com/in/${contact}`;
       break;
+    case 'bluesky':
+      href = `https://bsky.app/profile/${contact}`;
+      break;
     default:
       href = contact;
       break;
