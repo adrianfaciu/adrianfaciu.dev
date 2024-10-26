@@ -1,0 +1,25 @@
+@import '../../../assets/scss/variables';
+@import '../../../assets/scss/mixins';
+
+.scroll {
+  position: fixed;
+  bottom: 16px;
+  left: 0;
+  right: 16px;
+  display: flex;
+  justify-content: right;
+}
+
+.scrollButton {
+  cursor: pointer;
+  opacity: 0.5;
+  border-width: 1px;
+  width: 52px;
+  height: 52px;
+  border-radius: 26px;
+  align-items: center;
+  justify-content: center;
+  background-color: rgb(22, 30, 39);
+  display: flex;
+  z-index: 0;
+}

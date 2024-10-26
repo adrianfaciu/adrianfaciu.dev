@@ -5,6 +5,7 @@ import Comments from './Comments';
 import Content from './Content';
 import Meta from './Meta';
 import Tags from './Tags';
+import Scroll from './Scroll';
 import * as styles from './Post.module.scss';
 import SEO from '../Seo';
 
@@ -34,6 +35,8 @@ const Post = ({ post }) => {
         <div className={styles['post__comments']}>
           <Comments postSlug={slug} postTitle={post.frontmatter.title} />
         </div>
+
+        <Scroll />
       </div>
     </>
   );
