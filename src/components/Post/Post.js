@@ -8,7 +8,7 @@ import Tags from './Tags';
 import Scroll from './Scroll';
 import * as styles from './Post.module.scss';
 import SEO from '../Seo';
-
+import ShareTo from '../Social/ShareTo';
 const Post = ({ post }) => {
   const { html } = post;
   const { tagSlugs, slug, readingTime } = post.fields;
@@ -31,14 +31,7 @@ const Post = ({ post }) => {
           />
         </div>
 
-        <div className={styles['post__footer']}>
-          {tags && tagSlugs && <Tags tags={tags} tagSlugs={tagSlugs} />}
-          <Author {...{ title, slug }} />
-        </div>
-
-        <div className={styles['post__comments']}>
-          <Comments postSlug={slug} postTitle={post.frontmatter.title} />
-        </div>
+        <ShareTo text={title} url={`https://adrianfaciu.dev${slug}`} />
 
         <Scroll />
       </div>

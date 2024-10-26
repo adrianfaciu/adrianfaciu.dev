@@ -4,10 +4,10 @@
 .scroll {
   position: fixed;
   bottom: 16px;
-  left: 0;
   right: 16px;
   display: flex;
   justify-content: right;
+  width: fit-content;
 }
 
 .scrollButton {
