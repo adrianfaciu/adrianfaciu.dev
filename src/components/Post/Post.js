@@ -11,7 +11,7 @@ import SEO from '../Seo';
 
 const Post = ({ post }) => {
   const { html } = post;
-  const { tagSlugs, slug } = post.fields;
+  const { tagSlugs, slug, readingTime } = post.fields;
   const { tags, title, date, canonical, description } = post.frontmatter;
 
   return (
@@ -23,11 +23,15 @@ const Post = ({ post }) => {
         </Link>
 
         <div>
-          <Content body={html} title={title} />
+          <Content
+            body={html}
+            title={title}
+            date={date}
+            readingTime={readingTime}
+          />
         </div>
 
         <div className={styles['post__footer']}>
-          <Meta date={date} />
           {tags && tagSlugs && <Tags tags={tags} tagSlugs={tagSlugs} />}
           <Author {...{ title, slug }} />
         </div>

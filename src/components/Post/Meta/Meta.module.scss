@@ -2,8 +2,12 @@
 @import '../../../assets/scss/mixins';
 
 .meta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+
   &__date {
     font-style: italic;
   }
-
 }
