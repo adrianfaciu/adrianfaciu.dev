@@ -1,5 +1,7 @@
 import React from 'react';
 import { graphql } from 'gatsby';
+import { Helmet } from 'react-helmet';
+
 import Layout from '../components/Layout';
 import Post from '../components/Post';
 import { useSiteMetadata } from '../hooks';
@@ -9,12 +11,14 @@ const PostTemplate = ({ data }) => {
   const {
     title: postTitle,
     description: postDescription,
+    draft: isDraft,
   } = data.markdownRemark.frontmatter;
   const metaDescription =
     postDescription !== null ? postDescription : siteSubtitle;
 
   return (
     <Layout title={`${postTitle} - ${siteTitle}`} description={metaDescription}>
+      <Helmet>{isDraft && <meta name="robots" content="noindex" />}</Helmet>
       <Post post={data.markdownRemark} />
     </Layout>
   );
@@ -38,6 +42,7 @@ export const query = graphql`
         tags
         title
         canonical
+        draft
       }
     }
   }
