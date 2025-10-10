@@ -9,6 +9,8 @@ I am constantly seeking to improve my skills and knowledge, and I am always eage
 
 I began my career with .NET/C# back in 2008/2009, but I have since shifted my focus towards front-end development. While I still enjoy working on the technical side of things, I am now more interested in exploring the role of a Staff+ engineer and how I can contribute to technical leadership for greater impact in the organization.
 
-In 2019 and 2023, I had the pleasure of being involved in organizing the [Revo.js conference](https://revojs.ro/) - a not-for-profit event held in Timișoara, Romania.
+In 2019 and 2023, I had the pleasure of being involved in organizing [Revo.js conference](https://revojs.ro/) - a not-for-profit event held in Timișoara, Romania.
+
+Since the begining of 2024 I also help organize the [tim.js local meetup](https://timjs.ro/).
 
 I have a variety of hobbies like hiking, running, playing board and video games, and taking photos. Every month, I discover a new one!
