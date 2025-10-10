@@ -5,6 +5,8 @@ template: 'page'
 
 Sometimes I present at smaller events, I've been invited to a few podcasts or hosted a few workshops:
 
+- Dependency management in modern web projects @ tim.js meetup
+- Developer friendly code: practical tips for readability @ tim.js meetup
 - How to be a senior developer @ All-Stack Hangout
 - [Technical leadership for individual contributors](https://www.youtube.com/watch?v=bRrVdQyAltI&t=2463s) @ tim.js meetup
 - How to be a senior developer @ BudapestJS
