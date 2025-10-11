@@ -13,5 +13,27 @@ exports.onCreateWebpackConfig = ({ actions }) => {
   });
 };
 
-exports.createPages = require('./gatsby/create-pages');
+exports.createPages = async (args) => {
+  const { actions } = args;
+  const { createRedirect } = actions;
+
+  // Redirect sharedarticles to Reeder
+  createRedirect({
+    fromPath: '/sharedarticles',
+    toPath: 'https://reederapp.net/2mR0-bSCTv2wfPi1hG5Hsw',
+    isPermanent: true,
+    redirectInBrowser: true,
+  });
+
+  createRedirect({
+    fromPath: '/sharedarticles/',
+    toPath: 'https://reederapp.net/2mR0-bSCTv2wfPi1hG5Hsw',
+    isPermanent: true,
+    redirectInBrowser: true,
+  });
+
+  // Call existing createPages logic
+  await require('./gatsby/create-pages')(args);
+};
+
 exports.onCreateNode = require('./gatsby/on-create-node');
