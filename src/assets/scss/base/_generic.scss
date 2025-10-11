@@ -1,6 +1,9 @@
-/** 
+/**
  * Generic
  */
+@use '../variables' as *;
+@use '../mixins' as *;
+
 html {
   font-size: $typographic-root-font-size;
 }

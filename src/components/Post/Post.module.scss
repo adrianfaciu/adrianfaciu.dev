@@ -1,5 +1,5 @@
-@import '../../assets/scss/variables';
-@import '../../assets/scss/mixins';
+@use '../../assets/scss/variables' as *;
+@use '../../assets/scss/mixins' as *;
 
 .post {
   &__footer {
@@ -14,9 +14,9 @@
     padding: 0 15px;
   }
 
-  &__home-button {
+  &__homeButton {
     display: block;
-    max-width: 90px;
+    max-width: max-content;
     height: $button-height;
     padding: 0 24px;
     line-height: $button-height;
@@ -49,7 +49,7 @@
       padding: 0;
     }
 
-    &__home-button {
+    &__homeButton {
       position: fixed;
       max-width: auto;
       margin: 0;

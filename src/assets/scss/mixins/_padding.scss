@@ -1,6 +1,7 @@
 /**
  * Padding
  */
+@use '../variables' as *;
 
 @mixin padding($top, $right, $bottom:null, $left:null) {
     @if $left==null and $bottom==null {

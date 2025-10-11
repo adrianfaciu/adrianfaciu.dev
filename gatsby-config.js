@@ -125,7 +125,6 @@ module.exports = {
           'gatsby-remark-copy-linked-files',
           'gatsby-remark-smartypants',
           'gatsby-remark-autolink-headers',
-          'gatsby-remark-reading-time',
         ],
       },
     },
@@ -154,6 +153,10 @@ module.exports = {
         postCssPlugins: [...postCssPlugins],
         cssLoaderOptions: {
           camelCase: false,
+        },
+        sassOptions: {
+          api: 'modern',
+          silenceDeprecations: ['legacy-js-api'],
         },
       },
     },

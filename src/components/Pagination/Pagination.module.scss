@@ -1,5 +1,5 @@
-@import '../../assets/scss/variables';
-@import '../../assets/scss/mixins';
+@use '../../assets/scss/variables' as *;
+@use '../../assets/scss/mixins' as *;
 
 .pagination {
   @include margin-top(2);
@@ -21,7 +21,7 @@
 
       &--disable {
         pointer-events: none;
-        color: lighten($color-gray, 20%);
+        color: #a8a8a8;
       }
 
     }
@@ -44,7 +44,7 @@
 
       &--disable {
         pointer-events: none;
-        color: lighten($color-gray, 20%);
+        color: #a8a8a8;
       }
 
     }

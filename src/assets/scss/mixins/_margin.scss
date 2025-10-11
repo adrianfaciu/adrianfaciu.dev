@@ -1,6 +1,7 @@
 /**
  * Margin
  */
+@use '../variables' as *;
 
 @mixin margin-top($number) {
     margin-top: #{ $number * $typographic-leading + "px"};
