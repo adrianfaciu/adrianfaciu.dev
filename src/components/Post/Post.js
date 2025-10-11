@@ -6,12 +6,13 @@ import Content from './Content';
 import Meta from './Meta';
 import Tags from './Tags';
 import Scroll from './Scroll';
+import PostNavigation from './PostNavigation';
 import * as styles from './Post.module.scss';
 import SEO from '../Seo';
 import ShareTo from '../Social/ShareTo';
-const Post = ({ post }) => {
-  const { html } = post;
-  const { tagSlugs, slug, readingTime } = post.fields;
+const Post = ({ post, previousPost, nextPost }) => {
+  const { html, timeToRead } = post;
+  const { tagSlugs, slug } = post.fields;
   const { tags, title, date, canonical, description } = post.frontmatter;
 
   return (
@@ -27,11 +28,13 @@ const Post = ({ post }) => {
             body={html}
             title={title}
             date={date}
-            readingTime={readingTime}
+            timeToRead={timeToRead}
           />
         </div>
 
         <ShareTo text={title} url={`https://adrianfaciu.dev${slug}`} />
+
+        <PostNavigation previousPost={previousPost} nextPost={nextPost} />
 
         <Scroll />
       </div>

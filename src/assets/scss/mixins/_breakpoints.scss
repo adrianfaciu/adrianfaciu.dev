@@ -1,6 +1,7 @@
 /**
  * Breakpoints
  */
+@use '../variables' as *;
 
 @mixin breakpoint-xs {
     @content;

@@ -6,7 +6,7 @@ import Layout from '../components/Layout';
 import Post from '../components/Post';
 import { useSiteMetadata } from '../hooks';
 
-const PostTemplate = ({ data }) => {
+const PostTemplate = ({ data, pageContext }) => {
   const { title: siteTitle, subtitle: siteSubtitle } = useSiteMetadata();
   const {
     title: postTitle,
@@ -19,7 +19,11 @@ const PostTemplate = ({ data }) => {
   return (
     <Layout title={`${postTitle} - ${siteTitle}`} description={metaDescription}>
       <Helmet>{isDraft && <meta name="robots" content="noindex" />}</Helmet>
-      <Post post={data.markdownRemark} />
+      <Post
+        post={data.markdownRemark}
+        previousPost={pageContext.previousPost}
+        nextPost={pageContext.nextPost}
+      />
     </Layout>
   );
 };
@@ -32,10 +36,8 @@ export const query = graphql`
       fields {
         slug
         tagSlugs
-        readingTime {
-          text
-        }
       }
+      timeToRead
       frontmatter {
         date
         description
