@@ -5,6 +5,7 @@ template: 'page'
 
 Sometimes I present at smaller events, I've been invited to a few podcasts or hosted a few workshops:
 
+- Beyond Copy-Paste: Understanding LLMs and Making Them Work for You @ tim.js meetup
 - Dependency management in modern web projects @ tim.js meetup
 - Developer friendly code: practical tips for readability @ tim.js meetup
 - How to be a senior developer @ All-Stack Hangout
